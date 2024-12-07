@@ -28,7 +28,13 @@ const AcademiaHeader = ({
     return (
         <header className="academiaHeader__header-container">
             <div className="academiaHeader__logo-container">
-                <a aria-label="Compass" onClick={onCompassClick}>
+                <a
+                    aria-label="Compass"
+                    role="button"
+                    tabIndex="0"
+                    onClick={onCompassClick}
+                    onTouchStart={onCompassClick}
+                >
                     <RiveHeadTracking
                         className="academiaHeader__logo"
                         src={process.env.PUBLIC_URL + `${customSrc || "/rive/head.riv"}`}

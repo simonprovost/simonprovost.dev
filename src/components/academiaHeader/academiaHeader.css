@@ -41,6 +41,7 @@
 .academiaHeader__logo-container {
     width: 180px;
     height: 180px;
+    pointer-events: auto;
 }
 
 .academiaHeader__logo {
