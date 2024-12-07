@@ -1,0 +1,52 @@
+.socials-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px;
+    line-height: 24px;
+    color: #000000;
+}
+
+.social-container {
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.social-link {
+    text-decoration: none;
+    color: inherit;
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-color: #f4f4f5;
+    text-underline-offset: 2px;
+}
+
+.social-link:hover {
+    text-decoration-color: #a1a1aa;
+    transition: text-decoration-color 0.3s ease;
+}
+
+.social-title {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+
+    .socials-list {
+        width: 100%;
+        margin: 0;
+        text-align: left;
+    }
+
+    .social-title {
+        font-size: 1rem;
+    }
+
+}
