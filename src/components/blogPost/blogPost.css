@@ -1,0 +1,227 @@
+:root {
+    --font-serif: "Georgia", serif;
+    --font-sans: "Helvetica Neue", Arial, sans-serif;
+    --color-text: #222;
+    --color-accent: #0056b3;
+    --line-height: 1.8;
+    --max-width: 800px;
+}
+
+.blogPost__main_container {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+}
+
+.blogPost__header-and-content-container {
+    display: flex;
+    width: 100%;
+    max-width: var(--max-width);
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+
+.blogPost__header-and-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.blogPost__content-container {
+    margin-top: 1.5rem;
+    width: 100%;
+}
+
+.blogPost__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+    width: 100%;
+    line-height: var(--line-height);
+}
+
+
+
+.notion {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-sans);
+    max-width: var(--max-width);
+    width: 100%;
+    text-align: left;
+}
+
+.blogPost__container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    font-family: var(--font-serif);
+    color: var(--color-text);
+    line-height: var(--line-height);
+}
+
+.blogPost__download-cv-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 240px;
+    cursor: pointer;
+}
+
+.blogPost__positions-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: end;
+
+    width: 100%;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.blogPost__position-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.blogPost__position {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    row-gap: 20px;
+    font-size: 16px;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    color: var(--color-text);
+}
+
+.blogPost__position-grid {
+}
+
+.blogPost__supervised-container {
+    display: inline-flex;
+    padding-left: 2px;
+    padding-right: 2px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 4px;
+    font-size: 12px;
+    color: var(--color-text-light);
+    line-height: 1.2;
+    position: relative;
+    font-family: var(--font-sans);
+}
+
+.blogPost__supervisor-line {
+    font-style: italic;
+}
+
+.blogPost__supervisor-name {
+    font-weight: bold;
+}
+
+.blogPost__company-link {
+    color: #57068c;
+    text-decoration: none;
+}
+
+.blogPost__company-link:hover {
+    text-decoration: underline;
+}
+
+.blogPost__intro-section {
+    margin-bottom: 2rem;
+    font-size: 21px;
+}
+
+.blogPost__intro-section p {
+    margin: 0.5rem 0;
+}
+
+.blogPost__personal-section {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.blogPost__personal-content {
+    width: 50%;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.blogPost__closing-thoughts {
+    font-style: italic;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+
+.blogPost__supervisor-link {
+    color: rgb(170, 161, 164);
+    text-decoration-line: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-style: solid;
+    text-decoration-color: #eeeff2;
+    text-underline-offset: 2px;
+}
+
+.blogPost__supervisor-link:hover {
+    text-decoration-color: var(--lt-color-border-dark);
+    transition: text-decoration-color 0.3s ease;
+    cursor: pointer;
+}
+
+.blogPost__loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: "Georgia", serif;
+  color: #333;
+  text-align: center;
+  padding: 20px;
+  flex-direction: column;
+}
+
+.blogPost__loader {
+    width: 160px;
+    height: 160px;
+}
+
+.loader-text {
+  font-size: 1.2em;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: var(--font-serif);
+  color: var(--color-text);
+  text-align: center;
+  padding: 20px;
+}
+
+.error-message {
+  font-size: 1.2em;
+}
+
+.error-details {
+  font-size: 0.9em;
+  color: #555;
+  margin-top: 0.5em;
+}
