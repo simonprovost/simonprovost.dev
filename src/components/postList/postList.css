@@ -1,0 +1,95 @@
+.post__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px;
+    line-height: 24px;
+    color: #000000;
+    position: relative;
+}
+
+.post__hover-square {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 40px;
+    background-color: #f4f4f5;
+    border-radius: 10px;
+    z-index: -1;
+    transition: all 0.3s ease-in-out;
+    pointer-events: none;
+}
+
+.post__hover-square.animate {
+    animation: post__deform 0.5s ease-in-out forwards;
+}
+
+.post__container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 10px 10px 10px 0px;
+    border-radius: 10px;
+    width: fit-content;
+    cursor: pointer;
+}
+
+.post__link {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    z-index: 1;
+}
+
+.post__title {
+    text-decoration: underline;
+    text-decoration-color: #f4f4f5;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
+    font-weight: 500;
+}
+
+.post__details {
+    font-size: 14px;
+    line-height: 20px;
+    color: #a1a1aa;
+    font-weight: 450;
+}
+
+@keyframes post__deform {
+    0%, 100% {
+        transform: scaleX(1) scaleY(1);
+    }
+    25% {
+        transform: scaleX(1.03) scaleY(0.98);
+    }
+    50% {
+        transform: scaleX(1.05) scaleY(0.95);
+    }
+    75% {
+        transform: scaleX(1.03) scaleY(0.98);
+    }
+}
+
+
+@media (max-width: 768px) {
+    .post__list {
+        width: 100%;
+        max-width: 600px;
+        text-align: left;
+    }
+
+    .post__title {
+        font-size: 0.8rem;
+    }
+
+    .post__details {
+        font-size: 0.7rem;
+        line-height: 1.4;
+    }
+}
