@@ -39,7 +39,7 @@ const openSourceConfig = {
                 src: "videos/sklong.mp4",
                 aspect: "landscape",
             },
-            url: "https://github.com/simonprovost/sklong",
+            url: "https://github.com/simonprovost/scikit-longitudinal",
         },
         // {
         //   title: "Scikit-Lexicographical-Trees",
