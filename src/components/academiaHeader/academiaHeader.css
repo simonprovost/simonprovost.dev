@@ -1,0 +1,225 @@
+:root {
+    --lt-color-gray-100: #f8f9fc;
+    --lt-color-gray-200: #f1f3f9;
+    --lt-color-gray-300: #dee3ed;
+    --lt-color-gray-400: #c2c9d6;
+    --lt-color-gray-500: #8f96a3;
+    --lt-color-gray-600: #5e636e;
+    --lt-color-gray-700: #2f3237;
+    --lt-color-gray-800: #000000;
+    --lt-color-gray-900: #111213;
+    --lt-shadow-default: 0 2px 6px -1px rgba(0, 0, 0, 0.16), 0 1px 4px -1px rgba(0, 0, 0, 0.04);
+    --lt-shadow-active: 0 0 8px -2px rgba(0, 0, 0, 0.1), 0 6px 20px -3px rgba(0, 0, 0, 0.2);
+    --lt-color-white: #ffffff;
+    --lt-color-black: #111213;
+    --lt-color-transparent: rgba(255, 255, 255, 0);
+    --lt-color-background-light: var(--lt-color-gray-100);
+    --lt-color-background-default: var(--lt-color-gray-200);
+    --lt-color-background-dark: var(--lt-color-gray-300);
+    --lt-color-border-light: var(--lt-color-gray-200);
+    --lt-color-border-default: var(--lt-color-gray-300);
+    --lt-color-border-dark: var(--lt-color-gray-400);
+    --lt-color-text-very-light: var(--lt-color-gray-500);
+    --lt-color-text-light: var(--lt-color-gray-600);
+    --lt-color-text-default: var(--lt-color-gray-700);
+    --lt-color-text-dark: var(--lt-color-gray-800);
+    --lt-color-overlay-default: var(--lt-color-white);
+    --lt-color-overlay-dark: var(--lt-color-white);
+    --lt-color-overlay-transparent: rgba(0, 0, 0, 0.1);
+    --lt-shadow-website-overlay: 0 0 7px 0 rgba(0, 0, 0, 0.3);
+}
+
+.academiaHeader__header-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.academiaHeader__logo-container {
+    width: 180px;
+    height: 180px;
+}
+
+.academiaHeader__logo {
+    width: 100%;
+    height: 100%;
+}
+
+.academiaHeader__info-container {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    column-gap: 400px;
+    color: var(--lt-color-text-dark);
+    font-size: 16px;
+    line-height: 24px;
+    font-family: "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", "Helvetica Neue";
+    margin-bottom: 1.5rem;
+    margin-top: 1rem;
+}
+
+.academiaHeader__name {
+    box-sizing: border-box;
+    font-size: 16px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: -15px;
+    font-stretch: normal;
+    font-family: "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", "Helvetica Neue";
+}
+
+.academiaHeader__position {
+    box-sizing: border-box;
+    font-size: 16px;
+    font-weight: 550;
+    font-family: "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", "Helvetica Neue";
+}
+
+.academiaHeader__company-link {
+    box-sizing: border-box;
+    color: var(--lt-color-text-dark);
+    text-decoration-line: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-style: solid;
+    text-decoration-color: rgb(238, 239, 242);
+    text-underline-offset: 2px;
+    border: 0px solid rgb(229, 231, 235);
+}
+
+.academiaHeader__company-link:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--lt-color-text-very-light);
+    transition: text-decoration-color 0.3s ease;
+}
+
+.academiaHeader__tabs-container {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    row-gap: 16px;
+    column-gap: 16px;
+    transform: none;
+    border: 0px solid rgb(229, 231, 235);
+    font-size: 16px;
+    line-height: 24px;
+    font-family: "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", "Helvetica Neue";
+    margin-bottom: 1.5rem;
+}
+
+.academiaHeader__tab-link {
+    box-sizing: border-box;
+    color: rgb(170, 161, 164);
+    font-weight: 600;
+    text-decoration-line: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-style: solid;
+    text-decoration-color: #eeeff2;
+    text-underline-offset: 2px;
+}
+
+.academiaHeader__tab-link:hover {
+    text-decoration-color: var(--lt-color-border-dark);
+    transition: text-decoration-color 0.3s ease;
+    cursor: pointer;
+}
+
+.academiaHeader__static-title {
+    margin-top: 2.5rem;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--lt-color-text-default);
+    text-align: left;
+    width: 100%;
+    font-family: "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", "Helvetica Neue";
+}
+
+.academiaHeader__positions-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.academiaHeader__position-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.academiaHeader__supervised-container {
+    display: inline-flex;
+    padding-left: 2px;
+    padding-right: 2px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 4px;
+    font-size: 12px;
+    color: var(--lt-color-text-light);
+    line-height: 1.2;
+    position: relative;
+    font-family: "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", "Helvetica Neue";
+}
+
+.academiaHeader__supervisor-line {
+    font-style: italic;
+}
+
+.academiaHeader__supervisor-name {
+    font-weight: bold;
+}
+
+.academiaHeader__supervisor-link {
+    color: rgb(170, 161, 164);
+    text-decoration-line: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-style: solid;
+    text-decoration-color: #eeeff2;
+    text-underline-offset: 2px;
+}
+
+.academiaHeader__supervisor-link:hover {
+    text-decoration-color: var(--lt-color-border-dark);
+    transition: text-decoration-color 0.3s ease;
+    cursor: pointer;
+}
+
+
+
+@media (max-width: 768px) {
+    .academiaHeader__header-container {
+        padding: 8px 0;
+    }
+
+    .academiaHeader__logo-container {
+        width: 100px;
+        height: 100px;
+    }
+
+    .academiaHeader__info-container {
+        font-size: 14px;
+        line-height: 20px;
+        margin-bottom: 1rem;
+    }
+
+    .academiaHeader__name {
+        font-size: 14px;
+        margin-bottom: -10px;
+    }
+
+    .academiaHeader__position {
+        font-size: 14px;
+    }
+
+    .academiaHeader__tabs-container {
+        /*flex-direction: column;*/
+        /*row-gap: 8px; !* stack tabs vertically *!*/
+        /*column-gap: 0;*/
+        font-size: 14px;
+    }
+
+    .academiaHeader__static-title {
+        font-size: 16px;
+    }
+}
