@@ -138,6 +138,8 @@ class About extends Component {
                                 delayIncrement: 0.08,
                                 initialDelayRatio: 1,
                             }}
+                            customSrc="/rive/head_sub_pages.riv"
+                            isSubpage={true}
                         />
                         <div className="about__content-container">
                             <SnakeEffectContainer

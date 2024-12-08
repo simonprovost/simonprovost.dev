@@ -57,6 +57,8 @@ const Blog = () => {
                             initialDelayRatio: 1,
                         }}
                         onTabClick={() => {}}
+                        customSrc="/rive/head_sub_pages.riv"
+                        isSubpage={true}
                     />
                     <div className="blog__content-container">
                         <PostList

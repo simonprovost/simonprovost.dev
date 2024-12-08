@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import {
     useRive,
     useStateMachineInput,
@@ -8,8 +8,8 @@ import {
 } from "@rive-app/react-canvas";
 import PropTypes from "prop-types";
 
-const RiveHeadTracking = ({src, className, stateMachineName}) => {
-    const {rive, RiveComponent} = useRive({
+const RiveHeadTracking = ({ src, className, stateMachineName, isSubpage }) => {
+    const { rive, RiveComponent } = useRive({
         src,
         autoplay: true,
         stateMachines: stateMachineName,
@@ -22,6 +22,7 @@ const RiveHeadTracking = ({src, className, stateMachineName}) => {
     const xAxisInput = useStateMachineInput(rive, stateMachineName, "xAxis", 0);
     const yAxisInput = useStateMachineInput(rive, stateMachineName, "yAxis", 0);
     const isClicked = useStateMachineInput(rive, stateMachineName, "isClicked");
+    const isBack = useStateMachineInput(rive, stateMachineName, "isBack");
 
     const updateMousePosition = (x, y) => {
         if (xAxisInput && yAxisInput) {
@@ -41,7 +42,7 @@ const RiveHeadTracking = ({src, className, stateMachineName}) => {
             updateMousePosition(mouseX, mouseY);
         };
 
-        window.addEventListener("mousemove", handleInitialMousePosition, {once: true});
+        window.addEventListener("mousemove", handleInitialMousePosition, { once: true });
     }, [xAxisInput, yAxisInput]);
 
     useEffect(() => {
@@ -64,13 +65,37 @@ const RiveHeadTracking = ({src, className, stateMachineName}) => {
         return () => window.removeEventListener("click", handleMouseClick);
     }, [isClicked]);
 
-    return <RiveComponent className={className}/>;
+    useEffect(() => {
+        let timeoutId;
+
+        if (isSubpage && isBack) {
+            isBack.value = true;
+
+            timeoutId = setTimeout(() => {
+                isBack.value = false;
+            }, 8000);
+        }
+
+        return () => {
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
+        };
+    }, [isSubpage, isBack]);
+
+    return <RiveComponent className={className} />;
 };
 
 RiveHeadTracking.propTypes = {
     src: PropTypes.string.isRequired,
     className: PropTypes.string,
     stateMachineName: PropTypes.string.isRequired,
+    isSubpage: PropTypes.bool,
+};
+
+RiveHeadTracking.defaultProps = {
+    className: "",
+    isSubpage: false,
 };
 
 export default RiveHeadTracking;

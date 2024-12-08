@@ -57,6 +57,8 @@ class Credits extends Component {
                                     delayIncrement: 0.08,
                                     initialDelayRatio: 1,
                                 }}
+                                customSrc="/rive/head_sub_pages.riv"
+                                isSubpage={true}
                             />
                         </div>
                         <div className="credits__contentContainer">

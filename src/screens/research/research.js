@@ -50,6 +50,8 @@ class Research extends React.Component {
                 delayIncrement: 0.08,
                 initialDelayRatio: 1,
               }}
+              customSrc="/rive/head_sub_pages.riv"
+              isSubpage={true}
             />
             <div className="research__content-container">
               <PostList

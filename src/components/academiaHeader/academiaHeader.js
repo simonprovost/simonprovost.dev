@@ -16,6 +16,7 @@ const AcademiaHeader = ({
                             positionIndex = 0,
                             snakeEffectProps = {},
                             customSrc = null,
+                            isSubpage = false,
                         }) => {
     const {
         duration = 0.2,
@@ -39,6 +40,7 @@ const AcademiaHeader = ({
                         className="academiaHeader__logo"
                         src={process.env.PUBLIC_URL + `${customSrc || "/rive/head.riv"}`}
                         stateMachineName="LookAround"
+                        isSubpage={isSubpage}
                     />
                 </a>
             </div>
