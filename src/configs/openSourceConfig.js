@@ -26,7 +26,7 @@ const openSourceConfig = {
             details: ["2024 · AutoML for Longitudinal Data"],
             media: {
                 type: "video",
-                src: "videos/auto_sklong.mp4",
+                src: "videos/auto_sklong.webm",
                 aspect: "landscape",
             },
             url: "https://github.com/simonprovost/auto-sklong",
@@ -36,7 +36,7 @@ const openSourceConfig = {
             details: ["2023 · ML for Longitudinal Data"],
             media: {
                 type: "video",
-                src: "videos/sklong.mp4",
+                src: "videos/sklong.webm",
                 aspect: "landscape",
             },
             url: "https://github.com/simonprovost/scikit-longitudinal",
@@ -46,7 +46,7 @@ const openSourceConfig = {
             details: ["2023 · Open-Source Contributions"],
             media: {
                 type: "video",
-                src: "videos/github_1.mp4",
+                src: "videos/github_1.webm",
                 aspect: "landscape",
             },
             url: "https://github.com/openml-labs/gama/pull/212",
@@ -56,7 +56,7 @@ const openSourceConfig = {
             details: ["2022 · Open-Source Contributions"],
             media: {
                 type: "video",
-                src: "videos/github_2.mp4",
+                src: "videos/github_2.webm",
                 aspect: "landscape",
             },
             url: "https://github.com/openml-labs/gama/pull/210",
