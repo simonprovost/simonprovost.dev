@@ -62,7 +62,7 @@ const Blog = () => {
                         <PostList
                             posts={posts}
                             onPostHover={updateMedia}
-                            customOnPostClick={(post) => handlePostClick(post.id, post.title || "Untitled")}
+                            customOnPostClick={(post) => handlePostClick(post.id, post.titles.join(" ") || "Untitled")}
                             positionIndex={2}
                             snakeEffectProps={{
                                 duration: 0.5,

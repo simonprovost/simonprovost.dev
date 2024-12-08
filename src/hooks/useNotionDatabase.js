@@ -18,8 +18,8 @@ const useNotionDatabase = () => {
 
         const postsData = data.map((row) => ({
           id: row.id,
-          title: row.Title || 'Untitled',
-          details: row.Details || '',
+          titles: [row.Title] || ['Untitled'],
+          details: [row.Details] || [''],
           media: row['Files & media']?.[0]
             ? { type: 'image', src: row['Files & media'][0].url, aspect: 'landscape' }
             : null,

@@ -16,8 +16,28 @@ class PostList extends Component {
         left: "0px",
         opacity: 0,
       },
+      isMobile: window.innerWidth <= 768,
     };
   }
+
+  componentDidMount() {
+    window.addEventListener("resize", this.handleResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleResize);
+    clearTimeout(this.resizeTimeout);
+  }
+
+  handleResize = () => {
+    clearTimeout(this.resizeTimeout);
+    this.resizeTimeout = setTimeout(() => {
+      const isMobile = window.innerWidth <= 768;
+      if (isMobile !== this.state.isMobile) {
+        this.setState({ isMobile });
+      }
+    }, 150);
+  };
 
   handleMouseEnter = (e, media) => {
     const hoverSquare = this.hoverSquareRef.current;
@@ -70,7 +90,7 @@ class PostList extends Component {
       positionIndex = 0,
       snakeEffectProps = {},
     } = this.props;
-    const { hoverStyle } = this.state;
+    const { hoverStyle, isMobile } = this.state;
 
     const {
       duration = 0.2,
@@ -101,8 +121,47 @@ class PostList extends Component {
               onClick={() => this.handlePostClick(post)}
             >
               <a className="post__link">
-                <span className="post__title">{post.title}</span>
-                <span className="post__details">{post.details}</span>
+                {isMobile ? (
+                  <div className="post__titles">
+                    {post.titles.map((title, idx) => (
+                      <span
+                        className={`post__title ${
+                          idx === 0 ? "primary" : "subsequent"
+                        }`}
+                        key={idx}
+                      >
+                        {title}
+                      </span>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="post__titles joined">
+                    <span className="post__title">
+                      {post.titles.join(" ")}
+                    </span>
+                  </div>
+                )}
+
+                {isMobile ? (
+                  <div className="post__details-container">
+                    {post.details.map((detail, idx) => (
+                      <span
+                        className={`post__details ${
+                          idx === 0 ? "primary" : "subsequent"
+                        }`}
+                        key={idx}
+                      >
+                        {detail}
+                      </span>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="post__details-container joined">
+                    <span className="post__details">
+                      {post.details.join(" ")}
+                    </span>
+                  </div>
+                )}
               </a>
             </div>
           ))}
@@ -115,8 +174,8 @@ class PostList extends Component {
 PostList.propTypes = {
   posts: PropTypes.arrayOf(
     PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      details: PropTypes.string.isRequired,
+      titles: PropTypes.arrayOf(PropTypes.string).isRequired,
+      details: PropTypes.arrayOf(PropTypes.string).isRequired,
       media: PropTypes.shape({
         type: PropTypes.oneOf(["image", "video"]).isRequired,
         src: PropTypes.string.isRequired,

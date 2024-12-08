@@ -22,8 +22,8 @@ const openSourceConfig = {
     ],
     posts: [
         {
-            title: "Auto-Sklong",
-            details: "2024 · AutoML for Longitudinal Data",
+            titles: ["Auto-Sklong"],
+            details: ["2024 · AutoML for Longitudinal Data"],
             media: {
                 type: "video",
                 src: "videos/auto_sklong.mp4",
@@ -32,8 +32,8 @@ const openSourceConfig = {
             url: "https://github.com/simonprovost/auto-sklong",
         },
         {
-            title: "Scikit-Longitudinal",
-            details: "2023 · ML for Longitudinal Data",
+            titles: ["Scikit-Longitudinal"],
+            details: ["2023 · ML for Longitudinal Data"],
             media: {
                 type: "video",
                 src: "videos/sklong.mp4",
@@ -41,19 +41,9 @@ const openSourceConfig = {
             },
             url: "https://github.com/simonprovost/scikit-longitudinal",
         },
-        // {
-        //   title: "Scikit-Lexicographical-Trees",
-        //   details: "2023 · Scikit-learn Implm. of Lexicographical Trees",
-        //   media: {
-        //     type: "image",
-        //     src: "scikit_lexicographical_trees.jpeg",
-        //     aspect: "landscape",
-        //   },
-        //   url: "https://github.com/simonprovost/scikit-lexicographical-trees",
-        // },
         {
-            title: "GAMA x SMAC3",
-            details: "2023 · Open-Source Contributions",
+            titles: ["GAMA x SMAC3"],
+            details: ["2023 · Open-Source Contributions"],
             media: {
                 type: "video",
                 src: "videos/github_1.mp4",
@@ -62,8 +52,8 @@ const openSourceConfig = {
             url: "https://github.com/openml-labs/gama/pull/212",
         },
         {
-            title: "GAMA x ConfigSpace",
-            details: "2022 · Open-Source Contributions",
+            titles: ["GAMA x ConfigSpace"],
+            details: ["2022 · Open-Source Contributions"],
             media: {
                 type: "video",
                 src: "videos/github_2.mp4",
