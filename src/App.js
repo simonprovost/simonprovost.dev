@@ -1,5 +1,5 @@
-import React from "react";
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import researchConfig from "./configs/researchConfig";
 import connectConfig from "./configs/connectConfig";
 import aboutConfig from "./configs/aboutConfig";
@@ -12,17 +12,22 @@ import Credits from "./screens/credits/credits";
 import creditsConfig from "./configs/creditsConfig";
 import Blog from "./screens/blog/blog";
 import BlogPost from "./components/blogPost/blogPost";
+import { injectSpeedInsights } from "@vercel/speed-insights";
 
 const App = () => {
+    useEffect(() => {
+        injectSpeedInsights();
+    }, []);
+
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<OpenSource {...openSourceConfig} />}/>
-                <Route path="/about" element={<About {...aboutConfig} />}/>
-                <Route path="/research" element={<Research {...researchConfig} />}/>
-                <Route path="/connect" element={<Connect {...connectConfig} />}/>
-                <Route path="/credits" element={<Credits {...creditsConfig} />}/>
-                <Route path="/blog/" element={<Blog />}/>
+                <Route path="/" element={<OpenSource {...openSourceConfig} />} />
+                <Route path="/about" element={<About {...aboutConfig} />} />
+                <Route path="/research" element={<Research {...researchConfig} />} />
+                <Route path="/connect" element={<Connect {...connectConfig} />} />
+                <Route path="/credits" element={<Credits {...creditsConfig} />} />
+                <Route path="/blog/" element={<Blog />} />
                 <Route path="/blog/:id/:title" element={<BlogPost />} />
             </Routes>
         </Router>
