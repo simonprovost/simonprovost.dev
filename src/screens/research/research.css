@@ -231,3 +231,53 @@
         overflow-wrap: break-word;
     }
 }
+
+.research__abstract-preview-container {
+    width: 45%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.research__abstract-preview {
+    width: 100%;
+    max-width: 600px;
+    background-color: #fff;
+    padding: 2rem;
+    border: none;
+    box-shadow: none;
+}
+
+.research__abstract-title {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--color-text);
+    margin-bottom: 1rem;
+}
+
+.research__abstract-text {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    color: var(--color-text);
+    line-height: var(--line-height);
+    text-align: justify;
+    text-indent: 2em;
+    margin-bottom: 1em;
+}
+
+.research__abstract-authors {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    font-style: italic;
+    color: #555;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .research__abstract-preview-container {
+        display: none;
+    }
+}
