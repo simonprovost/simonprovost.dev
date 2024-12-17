@@ -187,7 +187,6 @@
 }
 
 
-
 @media (max-width: 768px) {
     .academiaHeader__header-container {
         padding: 8px 0;
@@ -214,9 +213,6 @@
     }
 
     .academiaHeader__tabs-container {
-        /*flex-direction: column;*/
-        /*row-gap: 8px; !* stack tabs vertically *!*/
-        /*column-gap: 0;*/
         font-size: 14px;
     }
 

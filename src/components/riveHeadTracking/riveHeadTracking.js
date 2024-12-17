@@ -1,15 +1,9 @@
-import React, { useEffect } from "react";
-import {
-    useRive,
-    useStateMachineInput,
-    Layout,
-    Fit,
-    Alignment,
-} from "@rive-app/react-canvas";
+import React, {useEffect} from "react";
+import {Alignment, Fit, Layout, useRive, useStateMachineInput,} from "@rive-app/react-canvas";
 import PropTypes from "prop-types";
 
-const RiveHeadTracking = ({ src, className, stateMachineName, isSubpage }) => {
-    const { rive, RiveComponent } = useRive({
+const RiveHeadTracking = ({src, className, stateMachineName, isSubpage}) => {
+    const {rive, RiveComponent} = useRive({
         src,
         autoplay: true,
         stateMachines: stateMachineName,
@@ -42,7 +36,7 @@ const RiveHeadTracking = ({ src, className, stateMachineName, isSubpage }) => {
             updateMousePosition(mouseX, mouseY);
         };
 
-        window.addEventListener("mousemove", handleInitialMousePosition, { once: true });
+        window.addEventListener("mousemove", handleInitialMousePosition, {once: true});
     }, [xAxisInput, yAxisInput]);
 
     useEffect(() => {
@@ -83,7 +77,7 @@ const RiveHeadTracking = ({ src, className, stateMachineName, isSubpage }) => {
         };
     }, [isSubpage, isBack]);
 
-    return <RiveComponent className={className} />;
+    return <RiveComponent className={className}/>;
 };
 
 RiveHeadTracking.propTypes = {

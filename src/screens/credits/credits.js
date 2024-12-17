@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import PropTypes from "prop-types";
 import "./credits.css";
 import AcademiaHeader from "../../components/academiaHeader/academiaHeader";
@@ -9,16 +9,16 @@ class Credits extends Component {
         super(props);
         this.state = {
             hoveredIndex: null,
-            isMobile: window.innerWidth <= 768 // Determine if mobile at initial load
+            isMobile: window.innerWidth <= 768
         };
     }
 
     handleMouseEnter = (index) => {
-        this.setState({ hoveredIndex: index });
+        this.setState({hoveredIndex: index});
     };
 
     handleMouseLeave = () => {
-        this.setState({ hoveredIndex: null });
+        this.setState({hoveredIndex: null});
     };
 
     generateSpiralStyles = (index) => {
@@ -34,8 +34,8 @@ class Credits extends Component {
     };
 
     render() {
-        const { items, showTitle } = this.props;
-        const { hoveredIndex, isMobile } = this.state;
+        const {items, showTitle} = this.props;
+        const {hoveredIndex, isMobile} = this.state;
 
         return (
             <div className="credits__mainContainer">
@@ -50,7 +50,8 @@ class Credits extends Component {
                                 showTabs={false}
                                 showTitle={showTitle}
                                 onCompassClick={this.handleCompassClick}
-                                onTabClick={() => {}}
+                                onTabClick={() => {
+                                }}
                                 positionIndex={0}
                                 snakeEffectProps={{
                                     duration: 0.1,

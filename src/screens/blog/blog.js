@@ -7,7 +7,7 @@ import './blog.css';
 import RiveLoader from "../../components/riveLoader/riveLoader";
 
 const Blog = () => {
-    const { posts, isLoading, error } = useNotionDatabase();
+    const {posts, isLoading, error} = useNotionDatabase();
     const [media, setMedia] = React.useState(null);
 
     const handlePostClick = (id, title) => {
@@ -23,7 +23,7 @@ const Blog = () => {
     if (isLoading) {
         return (
             <div className="blog__loader-container">
-                <RiveLoader src="rive/loader.riv" className={"blog__loader"} />
+                <RiveLoader src="rive/loader.riv" className={"blog__loader"}/>
                 <p className="loader-text">Fetching posts...</p>
             </div>
         );
@@ -56,7 +56,8 @@ const Blog = () => {
                             delayIncrement: 0.08,
                             initialDelayRatio: 1,
                         }}
-                        onTabClick={() => {}}
+                        onTabClick={() => {
+                        }}
                         customSrc="/rive/head_sub_pages.riv"
                         isSubpage={true}
                     />
