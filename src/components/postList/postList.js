@@ -39,7 +39,8 @@ class PostList extends Component {
     }, 150);
   };
 
-  handleMouseEnter = (e, media) => {
+  handleMouseEnter = (e, post) => {
+    const { customOnPostHover, onPostHover } = this.props;
     const hoverSquare = this.hoverSquareRef.current;
     const postListRect = this.postListRef.current.getBoundingClientRect();
     const postRect = e.currentTarget.getBoundingClientRect();
@@ -58,19 +59,23 @@ class PostList extends Component {
       },
     });
 
-    const { onPostHover } = this.props;
-    if (onPostHover) {
-      onPostHover(media);
+    if (customOnPostHover) {
+      customOnPostHover(post);
+    } else if (onPostHover) {
+      onPostHover(post.media);
     }
   };
 
   handleMouseLeave = () => {
+    const { customOnPostHover, onPostHover } = this.props;
+
     this.setState((prevState) => ({
       hoverStyle: { ...prevState.hoverStyle, opacity: 0 },
     }));
 
-    const { onPostHover } = this.props;
-    if (onPostHover) {
+    if (customOnPostHover) {
+      customOnPostHover(null);
+    } else if (onPostHover) {
       onPostHover(null);
     }
   };
@@ -85,11 +90,7 @@ class PostList extends Component {
   };
 
   render() {
-    const {
-      posts,
-      positionIndex = 0,
-      snakeEffectProps = {},
-    } = this.props;
+    const { posts, positionIndex = 0, snakeEffectProps = {} } = this.props;
     const { hoverStyle, isMobile } = this.state;
 
     const {
@@ -116,7 +117,7 @@ class PostList extends Component {
             <div
               className="post__container"
               key={index}
-              onMouseEnter={(e) => this.handleMouseEnter(e, post.media)}
+              onMouseEnter={(e) => this.handleMouseEnter(e, post)}
               onMouseLeave={this.handleMouseLeave}
               onClick={() => this.handlePostClick(post)}
             >
@@ -184,6 +185,7 @@ PostList.propTypes = {
     })
   ).isRequired,
   onPostHover: PropTypes.func,
+  customOnPostHover: PropTypes.func,
   positionIndex: PropTypes.number,
   snakeEffectProps: PropTypes.shape({
     duration: PropTypes.number,
