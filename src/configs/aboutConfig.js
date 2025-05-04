@@ -14,7 +14,7 @@ const aboutConfig = {
             ],
         },
         {
-            title: "Incoming Research Intern",
+            title: "Ex-Research Intern",
             companyName: "NYU Tandon",
             companyLink: "https://engineering.nyu.edu/",
             supervisors: [

@@ -21,6 +21,16 @@ const openSourceConfig = {
     ],
     posts: [
         {
+            titles: ["Urban Mapper"],
+            details: ["2025 · Spatio Urban Analysis"],
+            media: {
+                type: "video",
+                src: "videos/urban_mapper.webm",
+                aspect: "landscape",
+            },
+            url: "https://github.com/VIDA-NYU/UrbanMapper",
+        },
+        {
             titles: ["Auto-Sklong"],
             details: ["2024 · AutoML for Longitudinal Data"],
             media: {
