@@ -40,7 +40,7 @@ class About extends Component {
                 <section className="about__personal-section">
                     <div className="about__personal-content">
                         <p>
-                            Beyond research, I love cycling around London—and soon, New York City.
+                            Beyond research, I love cycling around London!.
                         </p>
                         <p>
                             Born in the sunny <em>South of France</em>, I often wonder how I swapped
@@ -55,7 +55,7 @@ class About extends Component {
                             arts, as well as to compete in Slackline and Jumpline.
                         </p>
                         <p>
-                            These hobbies keep my mind sharp and my curiosity alive.
+                            These hobbies keep my mind sharp and curiosity alive.
                         </p>
                     </div>
                 </section>
