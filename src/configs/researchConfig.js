@@ -6,7 +6,7 @@ const researchConfig = {
             authors: "Simon Provost, Prof. Alex Freitas",
             details: ["2024 · Main Author", "IEEE Bioinformatics and Biomedicine (BIBM)"],
             abstract: "Automated Machine Learning (AutoML) addresses the challenge of selecting the best machine learning algorithm and its hyperparameter settings for a given dataset. However, existing AutoML systems typically focus on standard classification tasks and cannot directly exploit temporal information e.g. in longitudinal datasets, which contain multiple measurements of the same features over time — a common scenario in biomedical applications. We introduce Auto-Sklong, the first AutoML system that includes longitudinal classification algorithms in its search space. Experiments with 20 age-related disease datasets from the English Longitudinal Study of Ageing demonstrate that Auto-Sklong significantly outperforms a state-of-the-art AutoML system (Auto-Sklearn) and two baseline random forest methods in terms of predictive accuracy.",
-            url: "https://ieeebibm.org/BIBM2024/documents/IEEE%20BIBM%202024PublicationPaperList.pdf#page=1.00&gsr=0",
+            url: "https://doi.org/10.1109/BIBM62325.2024.10821737",
         },
         {
             titles: ["Risk Adjustment for Auditing Free Flap Outcomes", "in Head and Neck Surgery"],
