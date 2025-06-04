@@ -1,6 +1,6 @@
 const aboutConfig = {
     showTitle: "About",
-    cv_link: "https://drive.google.com/file/d/1ADwdcGHC4rb07wNKNXshwl7XtOF7H9WM/view?usp=sharing",
+    cv_link: "https://drive.google.com/file/d/1FO05Il8SvD_Wq7mWolJiE4E-LmbDEk9n/view?usp=sharing",
     professional_positions: [
         {
             title: "Ph.D.",
