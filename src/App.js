@@ -15,7 +15,7 @@ import { injectSpeedInsights } from "@vercel/speed-insights";
 
 function RedirectToSubstack() {
   useEffect(() => {
-    window.location.replace("https://substack.com/@simonprovost");
+    window.location.replace("https://simonprovost.substack.com/");
   }, []);
 
   return null;

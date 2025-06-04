@@ -5,6 +5,7 @@ const connectConfig = {
         {title: "LinkedIn", url: "https://www.linkedin.com/in/simonprovostdev/"},
         {title: "Google Scholar", url: "https://scholar.google.com/citations?user=Lv_LddYAAAAJ&hl=en&oi=ao"},
         {title: "ORCID", url: "https://orcid.org/0000-0001-8402-5464"},
+        {title: "SubStack", url: "https://simonprovost.substack.com/"},
         {title: "Stack Overflow", url: "https://stackoverflow.com/users/9814037/simon-provost"},
         {title: "Email", url: "mailto:s.g.provost@kent.ac.uk"},
         {title: "Bento", url: "https://bento.me/simon-provost"},
