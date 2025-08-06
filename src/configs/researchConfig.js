@@ -2,6 +2,13 @@ const researchConfig = {
     showTitle: "Research",
     posts: [
         {
+            titles: ["Scikit-Longitudinal:", "A Machine Learning Library", "for Longitudinal Classification", "In Python"],
+            authors: "Simon Provost, Prof. Alex Freitas",
+            details: ["2025 · Main Author", "Journal Of Open Source Software (JOSS)"],
+            abstract: "Longitudinal data, characterised by repeated measurements of variables over time, presents unique challenges and opportunities in machine learning. This paper introduces ScikitLongitudinal, a Python library designed to address these challenges by providing a comprehensive set of tools for longitudinal data classification. Built to integrate with the popular Scikit-learn library, Scikit-Longitudinal offers a robust solution for researchers and practitioners working with longitudinal datasets.",
+            url: "https://doi.org/10.21105/joss.08481",
+        },
+        {
             titles: ["Auto-Sklong:", "A New AutoML System", "for Longitudinal Classification"],
             authors: "Simon Provost, Prof. Alex Freitas",
             details: ["2024 · Main Author", "IEEE Bioinformatics and Biomedicine (BIBM)"],
