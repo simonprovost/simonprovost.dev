@@ -1,0 +1,42 @@
+.gradient-card__container {
+    display: flex;
+    width: 600px;
+    height: 300px;
+    margin-top: -4rem;
+    margin-bottom: -4rem;
+}
+
+.gradient-card__text-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.gradient-card__text {
+    font-family: "SF Pro", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    padding: 0 1rem;
+    line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+    .gradient-card {
+        width: 250px;
+        height: 160px;
+    }
+
+    .gradient-card__text {
+        font-size: 1rem;
+        line-height: 1.3;
+    }
+}
