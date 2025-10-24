@@ -14,8 +14,8 @@ const GradientCard = () => {
 
     const texts = [
         "PhD student <br/> <i> @ UKC </i>",
-        "External Researcher <br/> <i> @ MIT, LCP lab </i>",
         "Former Researcher <br/> <i> @ NYU, VIDA lab </i>",
+        "Former Researcher <br/> <i> @ NHS, via UoK </i>",
     ];
 
     const handleTimeUpdate = (time) => {
