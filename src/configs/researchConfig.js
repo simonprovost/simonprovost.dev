@@ -2,6 +2,13 @@ const researchConfig = {
     showTitle: "Research",
     posts: [
         {
+            titles: ["A New Longitudinal", "Classification Method", "Based on Stacking Predictions", "for Separate Time Points"],
+            authors: "Simon Provost, Prof. Alex Freitas",
+            details: ["2025 · Main Author", "AI-2025 Conference"],
+            abstract: "Biomedical research often uses longitudinal data with repeated measurements of variables across time (e.g. cholesterol measured across time), which is challenging for standard machine learning algorithms due to intrinsic temporal dependencies. The Separate Waves (SepWav) data-transformation method trains a base classifier for each time point (“wave”) and aggregates their predictions via voting. However, the simplicity of the voting mechanism may not be enough to capture complex patterns of time-dependent interactions involving the base classifiers’ predictions. Hence, we propose a novel SepWav method where the simple voting mechanism is replaced by a stacking-based meta-classifier that integrates the base classifiers’ wave-specific predictions into a final predicted class label, aiming at improving predictive performance. Experiments with 20 datasets of ageing-related diseases have shown that, overall, the proposed Stacking-based SepWav method achieved significantly better predictive performance than two other methods for longitudinal classification in most cases, when using class-weight adjustment as a class-balancing method.",
+            url: "https://www.conferenceexpert.org.uk/admin/papers2.php?conf=ai2025&f=f1",
+        },
+        {
             titles: ["Scikit-Longitudinal:", "A Machine Learning Library", "for Longitudinal Classification", "In Python"],
             authors: "Simon Provost, Prof. Alex Freitas",
             details: ["2025 · Main Author", "Journal Of Open Source Software (JOSS)"],
