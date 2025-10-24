@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
-import {BrowserRouter as Router, Navigate, Route, Routes} from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import researchConfig from "./configs/researchConfig";
 import connectConfig from "./configs/connectConfig";
 import aboutConfig from "./configs/aboutConfig";
 import openSourceConfig from "./configs/openSourceConfig";
+import talksConfig from "./configs/talksConfig";
 import creditsConfig from "./configs/creditsConfig";
 import OpenSource from "./screens/openSource/openSource";
+import Talks from "./screens/talks/talks";
 import About from "./screens/about/about";
 import Research from "./screens/research/research";
 import Connect from "./screens/connect/connect";
@@ -30,6 +32,7 @@ const App = () => {
         <Router>
             <Routes>
                 <Route path="/" element={<OpenSource {...openSourceConfig} />} />
+                <Route path="/talks" element={<Talks {...talksConfig} />} />
                 <Route path="/about" element={<About {...aboutConfig} />} />
                 <Route path="/research" element={<Research {...researchConfig} />} />
                 <Route path="/connect" element={<Connect {...connectConfig} />} />

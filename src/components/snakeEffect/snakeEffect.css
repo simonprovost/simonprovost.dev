@@ -57,3 +57,16 @@
         opacity: 1;
     }
 }
+
+.snake-effect-child--static {
+    transform: none !important;
+    animation: none !important;
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+    will-change: auto !important;
+}
+
+.snake-effect-container--static {
+    animation: none !important;
+    will-change: auto !important;
+}

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useRef} from "react";
 import PropTypes from "prop-types";
 import "./snakeEffect.css";
 
@@ -11,13 +11,9 @@ const SnakeEffectContainer = ({
                                   parentStyle = "parent-container",
                                   childStyle = "child",
                               }) => {
-    const [isVisible, setIsVisible] = useState(false);
-
-    useEffect(() => {
-        setIsVisible(true);
-    }, []);
-
-    let totalDuration = initialDelay;
+    const hasAnimatedRef = useRef(false);
+    const shouldAnimateChildren = !hasAnimatedRef.current;
+    hasAnimatedRef.current = true;
 
     const applySnakeEffect = (elements, parentDelay) => {
         let delay = parentDelay;
@@ -29,16 +25,32 @@ const SnakeEffectContainer = ({
                 return;
             }
 
-            delay += delayIncrement;
+            if (shouldAnimateChildren) {
+                delay += delayIncrement;
+            }
             const currentDelay = delay;
 
             let newChild = React.cloneElement(child, {
                 style: {
                     ...child.props.style,
-                    animationDelay: `${currentDelay}s`,
-                    animationDuration: `${duration}s`,
+                    ...(shouldAnimateChildren
+                        ? {
+                            animationDelay: `${currentDelay}s`,
+                            animationDuration: `${duration}s`,
+                        }
+                        : {
+                            animationDelay: "0s",
+                            animationDuration: "0s",
+                            animationName: "none",
+                        }),
                 },
-                className: `${child.props.className || ""} ${childStyle}`,
+                className: [
+                    child.props.className || "",
+                    shouldAnimateChildren && childStyle ? childStyle : "",
+                    !shouldAnimateChildren ? "snake-effect-child--static" : "",
+                ]
+                    .filter(Boolean)
+                    .join(" "),
             });
 
             if (applyToSubchildren) {
@@ -59,24 +71,29 @@ const SnakeEffectContainer = ({
             newElements.push(newChild);
         });
 
-        totalDuration = delay + duration;
-
         return [newElements, delay];
     };
 
-    const [animatedChildren] = applySnakeEffect(children, initialDelay);
+    const [animatedChildren, lastDelay] = applySnakeEffect(children, initialDelay);
+
+    const totalDuration = shouldAnimateChildren ? lastDelay + duration : 0;
 
     const containerStyle = {
-        animationName: 'blurFade',
-        animationDuration: `${totalDuration}s`,
-        animationFillMode: 'forwards',
-        animationTimingFunction: 'ease-out',
-        willChange: 'filter',
+        animationName: shouldAnimateChildren ? "blurFade" : "none",
+        animationDuration: shouldAnimateChildren ? `${totalDuration}s` : "0s",
+        animationFillMode: "forwards",
+        animationTimingFunction: "ease-out",
+        willChange: shouldAnimateChildren ? "filter" : "auto",
     };
 
     return (
         <div
-            className={`${parentStyle} ${isVisible ? "visible" : ""}`}
+            className={[
+                parentStyle,
+                !shouldAnimateChildren ? "snake-effect-container--static" : "",
+            ]
+                .filter(Boolean)
+                .join(" ")}
             style={containerStyle}
         >
             {animatedChildren}
