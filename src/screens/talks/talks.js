@@ -13,13 +13,33 @@ class Talks extends React.Component {
             lockedPostId: null,
             hoveredPostId: null,
             showLockHint: true,
+            isMediaExpanded: false,
         };
         this.hoverUnlockTimeout = null;
+        this.originalBodyOverflow = null;
     }
 
     componentWillUnmount() {
         if (this.hoverUnlockTimeout) {
             clearTimeout(this.hoverUnlockTimeout);
+        }
+
+        if (this.state.isMediaExpanded) {
+            document.removeEventListener("keydown", this.handleKeyDown);
+            document.body.style.overflow = this.originalBodyOverflow || "";
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.isMediaExpanded !== this.state.isMediaExpanded) {
+            if (this.state.isMediaExpanded) {
+                this.originalBodyOverflow = document.body.style.overflow;
+                document.body.style.overflow = "hidden";
+                document.addEventListener("keydown", this.handleKeyDown);
+            } else {
+                document.body.style.overflow = this.originalBodyOverflow || "";
+                document.removeEventListener("keydown", this.handleKeyDown);
+            }
         }
     }
 
@@ -40,6 +60,7 @@ class Talks extends React.Component {
                 this.setState({
                     activePost: post,
                     hoveredPostId: post.id,
+                    isMediaExpanded: false,
                 });
             } else {
                 this.setState({
@@ -54,6 +75,7 @@ class Talks extends React.Component {
                         return {
                             lockedPostId: null,
                             activePost: post,
+                            isMediaExpanded: false,
                         };
                     });
                     this.hoverUnlockTimeout = null;
@@ -63,6 +85,7 @@ class Talks extends React.Component {
             this.setState((prevState) => ({
                 hoveredPostId: null,
                 activePost: prevState.lockedPostId ? prevState.activePost : null,
+                isMediaExpanded: prevState.lockedPostId ? prevState.isMediaExpanded : false,
             }));
         }
     };
@@ -83,8 +106,33 @@ class Talks extends React.Component {
                 activePost: post,
                 hoveredPostId: post.id,
                 showLockHint: shouldHideLockHint ? false : prevState.showLockHint,
+                isMediaExpanded: false,
             };
         });
+    };
+
+    handleKeyDown = (event) => {
+        if (event.key === "Escape") {
+            this.setState({isMediaExpanded: false});
+        }
+    };
+
+    handleExpandToggle = () => {
+        this.setState((prevState) => ({
+            isMediaExpanded: !prevState.isMediaExpanded,
+        }));
+    };
+
+    handleOverlayClick = () => {
+        this.setState({isMediaExpanded: false});
+    };
+
+    openExternalLink = (link) => {
+        if (!link) {
+            return;
+        }
+
+        window.open(link, "_blank", "noopener,noreferrer");
     };
 
     getIframeSrc = (media) => {
@@ -105,7 +153,7 @@ class Talks extends React.Component {
     };
 
     renderMediaPreview = () => {
-        const {activePost} = this.state;
+        const {activePost, isMediaExpanded} = this.state;
 
         if (!activePost) {
             return null;
@@ -117,59 +165,145 @@ class Talks extends React.Component {
         }
 
         const previewClass = `talks__media-preview ${media.aspect === "portrait" ? "portrait" : "landscape"}`;
+        const wrapperClass = `talks__media-preview-wrapper${isMediaExpanded ? " talks__media-preview-wrapper--expanded" : ""}`;
+        const figmaLink = media.figmaLink || media.src;
+        const pdfLink = media.pdfLink || "";
+        const hasPdfLink = Boolean(pdfLink);
+        const enlargeLabel = isMediaExpanded ? "Exit full-screen preview" : "Enlarge preview";
 
-        if (media.type === "image") {
-            return (
-                <div className={previewClass}>
-                    <img
-                        src={media.src}
-                        alt={media.title || activePost.titles.join(" ")}
-                        className="talks__media-content"
-                    />
-                </div>
-            );
+        const renderMediaContent = () => {
+            if (media.type === "image") {
+                return (
+                    <div className={previewClass}>
+                        <img
+                            src={media.src}
+                            alt={media.title || activePost.titles.join(" ")}
+                            className="talks__media-content"
+                        />
+                    </div>
+                );
+            }
+
+            if (media.type === "video") {
+                return (
+                    <div className={previewClass}>
+                        <video
+                            src={media.src}
+                            className="talks__media-content"
+                            autoPlay
+                            muted
+                            loop
+                        />
+                    </div>
+                );
+            }
+
+            if (media.type === "iframe") {
+                const iframeSrc = this.getIframeSrc(media);
+                return (
+                    <div className={previewClass}>
+                        <iframe
+                            src={iframeSrc}
+                            title={media.title || activePost.titles.join(" ")}
+                            className="talks__media-content"
+                            allow="fullscreen"
+                            allowFullScreen
+                            loading="lazy"
+                            style={{border: "1px solid rgba(0, 0, 0, 0.1)"}}
+                        ></iframe>
+                    </div>
+                );
+            }
+
+            return null;
+        };
+
+        const mediaContent = renderMediaContent();
+
+        if (!mediaContent) {
+            return null;
         }
 
-        if (media.type === "video") {
-            return (
-                <div className={previewClass}>
-                    <video
-                        src={media.src}
-                        className="talks__media-content"
-                        autoPlay
-                        muted
-                        loop
-                    />
+        return (
+            <div className={wrapperClass}>
+                {mediaContent}
+                <div className="talks__media-toolbar">
+                    <button
+                        type="button"
+                        className="talks__media-toolbar-button"
+                        onClick={() => this.openExternalLink(figmaLink)}
+                        aria-label="Open slides in Figma"
+                    >
+                        <svg viewBox="0 0 24 24" aria-hidden="true" className="talks__media-toolbar-icon">
+                            <path d="M7.5 2.5h4a3.5 3.5 0 0 1 0 7h-4z" fill="currentColor" />
+                            <path d="M11.5 9.5a3.5 3.5 0 1 1 0 7h-4v-3.5a3.5 3.5 0 0 1 3.5-3.5z" fill="currentColor" />
+                            <path d="M7.5 2.5a3.5 3.5 0 1 0 0 7z" fill="currentColor" />
+                            <circle cx="7.5" cy="16" r="3.5" fill="currentColor" />
+                            <path d="M11.5 2.5H15A3.5 3.5 0 1 1 15 9h-3.5z" fill="currentColor" />
+                        </svg>
+                        <span className="talks__sr-only">Open in Figma</span>
+                    </button>
+                    <button
+                        type="button"
+                        className={`talks__media-toolbar-button${isMediaExpanded ? " talks__media-toolbar-button--active" : ""}`}
+                        onClick={this.handleExpandToggle}
+                        aria-label={enlargeLabel}
+                        aria-pressed={isMediaExpanded}
+                    >
+                        <svg viewBox="0 0 24 24" aria-hidden="true" className="talks__media-toolbar-icon">
+                            <path
+                                d="M5 5h6v2H7v4H5zm14 0v6h-2V7h-4V5zm-6 14h6v-6h-2v4h-4zm-2-6H5v6h6v-2H7v-4z"
+                                fill="currentColor"
+                            />
+                        </svg>
+                        <span className="talks__sr-only">{enlargeLabel}</span>
+                    </button>
+                    <button
+                        type="button"
+                        className={`talks__media-toolbar-button${
+                            hasPdfLink ? "" : " talks__media-toolbar-button--disabled"
+                        }`}
+                        onClick={() => this.openExternalLink(pdfLink)}
+                        aria-label={hasPdfLink ? "Download PDF" : "PDF unavailable"}
+                        disabled={!hasPdfLink}
+                    >
+                        <svg viewBox="0 0 24 24" aria-hidden="true" className="talks__media-toolbar-icon">
+                            <path
+                                d="M6 3h9l4 4v14H6z"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinejoin="round"
+                            />
+                            <path
+                                d="M15 3v4h4"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinejoin="round"
+                            />
+                            <path
+                                d="M9 11.5h1.25a1.75 1.75 0 0 1 0 3.5H9zm3.5 0h1a1.5 1.5 0 0 1 0 3h-1zM9 13.25h1"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1.4"
+                                strokeLinecap="round"
+                            />
+                        </svg>
+                        <span className="talks__sr-only">Download PDF</span>
+                    </button>
                 </div>
-            );
-        }
-
-        if (media.type === "iframe") {
-            const iframeSrc = this.getIframeSrc(media);
-            return (
-                <div className={previewClass}>
-                    <iframe
-                        src={iframeSrc}
-                        title={media.title || activePost.titles.join(" ")}
-                        className="talks__media-content"
-                        allow="fullscreen"
-                        allowFullScreen
-                        loading="lazy"
-                        style={{border: "1px solid rgba(0, 0, 0, 0.1)"}}
-                    ></iframe>
-                </div>
-            );
-        }
-
-        return null;
+            </div>
+        );
     };
 
     render() {
         const {name, positions, tabs, posts, showTitle} = this.props;
-        const {lockedPostId, activePost, showLockHint} = this.state;
+        const {lockedPostId, activePost, showLockHint, isMediaExpanded} = this.state;
         const contentContainerClassName = `talks__content-container${
             showLockHint ? " talks__content-container--hint-visible" : ""
         }`;
+        const mediaPreview = this.renderMediaPreview();
 
         return (
             <div className="talks__container">
@@ -223,7 +357,14 @@ class Talks extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="talks__media-preview-container">{this.renderMediaPreview()}</div>
+                <div className="talks__media-preview-container">{mediaPreview}</div>
+                {isMediaExpanded && (
+                    <div
+                        className="talks__media-overlay"
+                        onClick={this.handleOverlayClick}
+                        aria-hidden="true"
+                    />
+                )}
             </div>
         );
     }
@@ -261,6 +402,8 @@ Talks.propTypes = {
                 src: PropTypes.string.isRequired,
                 aspect: PropTypes.oneOf(["portrait", "landscape"]),
                 title: PropTypes.string,
+                figmaLink: PropTypes.string,
+                pdfLink: PropTypes.string,
             }),
         })
     ).isRequired,
