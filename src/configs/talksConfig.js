@@ -28,7 +28,7 @@ const talksConfig = {
             details: ["AI-2025 (BCS SGAI), Cambridge, UK", "Dec. 2025"],
             media: {
                 type: "iframe",
-                src: "https://embed.figma.com/slides/kwRQKCUvF3bhJ5IZEU1CrY/Slides-BCS-SGAI?node-id=1-295&embed-host=share",
+                src: "https://embed.figma.com/slides/kwRQKCUvF3bhJ5IZEU1CrY/Slides-BCS-SGAI?node-id=1-288&embed-host=share",
                 aspect: "landscape",
                 title: "AI-2025 Slides",
             },
