@@ -5,7 +5,7 @@
     font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     font-size: 16px;
     line-height: 24px;
-    color: #000000;
+    color: var(--color-text-primary);
 }
 
 .social-container {
@@ -23,12 +23,12 @@
     color: inherit;
     font-weight: 500;
     text-decoration: underline;
-    text-decoration-color: #f4f4f5;
+    text-decoration-color: var(--color-border-subtle);
     text-underline-offset: 2px;
 }
 
 .social-link:hover {
-    text-decoration-color: #a1a1aa;
+    text-decoration-color: var(--color-link-hover);
     transition: text-decoration-color 0.3s ease;
 }
 

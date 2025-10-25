@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, {useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import "./snakeEffect.css";
 
@@ -12,42 +12,47 @@ const SnakeEffectContainer = ({
                                   childStyle = "child",
                               }) => {
     const hasAnimatedRef = useRef(false);
+    const storedChildStylesRef = useRef(new Map());
+    const storedContainerStyleRef = useRef(null);
     const shouldAnimateChildren = !hasAnimatedRef.current;
-    hasAnimatedRef.current = true;
 
-    const applySnakeEffect = (elements, parentDelay) => {
+    useEffect(() => {
+        if (!hasAnimatedRef.current) {
+            hasAnimatedRef.current = true;
+        }
+    }, []);
+
+    const applySnakeEffect = (elements, parentDelay, parentKey = "root") => {
         let delay = parentDelay;
         const newElements = [];
 
-        React.Children.forEach(elements, (child) => {
+        React.Children.forEach(elements, (child, index) => {
             if (!React.isValidElement(child)) {
                 newElements.push(child);
                 return;
             }
 
+            const childKey = `${parentKey}-${child.key ?? index}`;
+            let animationStyle = storedChildStylesRef.current.get(childKey) || null;
+
             if (shouldAnimateChildren) {
                 delay += delayIncrement;
+                const currentDelay = delay;
+                animationStyle = {
+                    animationDelay: `${currentDelay}s`,
+                    animationDuration: `${duration}s`,
+                };
+                storedChildStylesRef.current.set(childKey, animationStyle);
             }
-            const currentDelay = delay;
 
             let newChild = React.cloneElement(child, {
                 style: {
                     ...child.props.style,
-                    ...(shouldAnimateChildren
-                        ? {
-                            animationDelay: `${currentDelay}s`,
-                            animationDuration: `${duration}s`,
-                        }
-                        : {
-                            animationDelay: "0s",
-                            animationDuration: "0s",
-                            animationName: "none",
-                        }),
+                    ...(animationStyle || {}),
                 },
                 className: [
                     child.props.className || "",
-                    shouldAnimateChildren && childStyle ? childStyle : "",
-                    !shouldAnimateChildren ? "snake-effect-child--static" : "",
+                    childStyle && storedChildStylesRef.current.has(childKey) ? childStyle : "",
                 ]
                     .filter(Boolean)
                     .join(" "),
@@ -58,7 +63,8 @@ const SnakeEffectContainer = ({
                 if (childElements.length > 0) {
                     const [childrenWithEffects, updatedDelay] = applySnakeEffect(
                         childElements,
-                        delay
+                        delay,
+                        childKey
                     );
                     delay = updatedDelay;
 
@@ -76,22 +82,28 @@ const SnakeEffectContainer = ({
 
     const [animatedChildren, lastDelay] = applySnakeEffect(children, initialDelay);
 
-    const totalDuration = shouldAnimateChildren ? lastDelay + duration : 0;
+    if (shouldAnimateChildren) {
+        const totalDuration = lastDelay + duration;
+        storedContainerStyleRef.current = {
+            animationName: "blurFade",
+            animationDuration: `${totalDuration}s`,
+            animationFillMode: "forwards",
+            animationTimingFunction: "ease-out",
+            willChange: "filter",
+        };
+    }
 
-    const containerStyle = {
-        animationName: shouldAnimateChildren ? "blurFade" : "none",
-        animationDuration: shouldAnimateChildren ? `${totalDuration}s` : "0s",
+    const containerStyle = storedContainerStyleRef.current || {
+        animationName: "none",
+        animationDuration: "0s",
         animationFillMode: "forwards",
         animationTimingFunction: "ease-out",
-        willChange: shouldAnimateChildren ? "filter" : "auto",
+        willChange: "auto",
     };
 
     return (
         <div
-            className={[
-                parentStyle,
-                !shouldAnimateChildren ? "snake-effect-container--static" : "",
-            ]
+            className={[parentStyle]
                 .filter(Boolean)
                 .join(" ")}
             style={containerStyle}

@@ -1,16 +1,8 @@
-:root {
-    --font-serif: "Georgia", serif;
-    --font-sans: "Helvetica Neue", Arial, sans-serif;
-    --color-text: #222;
-    --color-accent: #ffc149;
-    --line-height: 1.8;
-    --max-width: 800px;
-}
-
 .about__main_container {
     display: flex;
     height: 100vh;
     width: 100%;
+    color: var(--color-text-primary);
 }
 
 .about__header-and-content-container {
@@ -41,11 +33,11 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    max-width: var(--max-width);
+    max-width: 800px;
     margin: 0 auto;
-    font-family: var(--font-serif);
-    color: var(--color-text);
-    line-height: var(--line-height);
+    font-family: "Georgia", serif;
+    color: var(--color-text-primary);
+    line-height: 1.8;
 }
 
 .about__download-cv-container {
@@ -66,15 +58,15 @@
     font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     font-size: 1.2rem;
     font-weight: 500;
-    color: var(--color-text);
+    color: var(--color-text-primary);
     text-decoration: none;
-    text-decoration-color: #f4f4f5;
+    text-decoration-color: var(--color-border-subtle);
     transition: text-decoration-color 0.3s ease, color 0.3s ease;
 }
 
 .about__download-cv-link:hover {
-    text-decoration-color: #a1a1aa;
-    color: #78789a;
+    text-decoration-color: var(--color-link-hover);
+    color: var(--color-link-hover);
     cursor: pointer;
 }
 

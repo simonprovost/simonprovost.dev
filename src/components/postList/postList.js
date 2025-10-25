@@ -1,5 +1,6 @@
 import React, {Component, createRef} from "react";
 import PropTypes from "prop-types";
+import TouchAppRoundedIcon from "@mui/icons-material/TouchAppRounded";
 import "./postList.css";
 import SnakeEffectContainer from "../snakeEffect/snakeEffect";
 
@@ -215,6 +216,9 @@ class PostList extends Component {
                             onMouseLeave={this.handleMouseLeave}
                             onClick={() => this.handlePostClick(post)}
                         >
+                            <span className="post__hint-icon" aria-hidden="true">
+                                <TouchAppRoundedIcon className="post__hint-iconGlyph" fontSize="inherit" />
+                            </span>
                             <a className="post__link">
                                 {isMobile ? (
                                     <div className="post__titles">

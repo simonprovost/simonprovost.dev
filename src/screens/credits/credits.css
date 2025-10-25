@@ -2,6 +2,7 @@
     display: flex;
     height: 100vh;
     width: 100%;
+    color: var(--color-text-primary);
 }
 
 .credits__headerAndContentContainer {
@@ -52,6 +53,7 @@
     transition: transform 1s ease, opacity 1s ease;
     opacity: 0.9;
     cursor: pointer;
+    color: var(--color-text-secondary);
 }
 
 .credits__item--faded {
@@ -69,11 +71,13 @@
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 600;
+    color: var(--color-text-primary);
 }
 
 .credits__details {
     display: none;
     text-align: center;
+    color: var(--color-text-tertiary);
 }
 
 .credits__item:hover .credits__details {
@@ -87,12 +91,12 @@
 .credits__link {
     font-size: 0.8rem;
     font-style: italic;
-    color: #888;
+    color: var(--color-link);
     text-decoration: underline;
 }
 
 .credits__link:hover {
-    color: #666;
+    color: var(--color-link-hover);
     text-decoration: underline;
 }
 

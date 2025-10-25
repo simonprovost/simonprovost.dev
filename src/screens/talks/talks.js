@@ -12,6 +12,7 @@ class Talks extends React.Component {
             activePost: null,
             lockedPostId: null,
             hoveredPostId: null,
+            showLockHint: true,
         };
         this.hoverUnlockTimeout = null;
     }
@@ -75,11 +76,13 @@ class Talks extends React.Component {
         this.setState((prevState) => {
             const isSamePostLocked = prevState.lockedPostId === post.id;
             const nextLockedPostId = isSamePostLocked ? null : post.id;
+            const shouldHideLockHint = !isSamePostLocked && prevState.showLockHint;
 
             return {
                 lockedPostId: nextLockedPostId,
                 activePost: post,
                 hoveredPostId: post.id,
+                showLockHint: shouldHideLockHint ? false : prevState.showLockHint,
             };
         });
     };
@@ -145,7 +148,10 @@ class Talks extends React.Component {
 
     render() {
         const {name, positions, tabs, posts, showTitle} = this.props;
-        const {lockedPostId, activePost} = this.state;
+        const {lockedPostId, activePost, showLockHint} = this.state;
+        const contentContainerClassName = `talks__content-container${
+            showLockHint ? " talks__content-container--hint-visible" : ""
+        }`;
 
         return (
             <div className="talks__container">
@@ -171,7 +177,7 @@ class Talks extends React.Component {
                             customSrc="/rive/head_sub_pages.riv"
                             isSubpage={true}
                         />
-                        <div className="talks__content-container">
+                        <div className={contentContainerClassName}>
                             <PostList
                                 posts={posts}
                                 customOnPostHover={this.handlePostHover}

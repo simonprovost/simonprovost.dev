@@ -1,16 +1,8 @@
-:root {
-    --font-serif: "Georgia", serif;
-    --font-sans: "Helvetica Neue", Arial, sans-serif;
-    --color-text: #222;
-    --color-accent: #ffc149;
-    --line-height: 1.8;
-    --max-width: 800px;
-}
-
 .connect__container {
     display: flex;
     height: 100vh;
     width: 100%;
+    color: var(--color-text-primary);
 }
 
 .connect__header-and-content-container {
