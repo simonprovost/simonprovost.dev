@@ -87,6 +87,23 @@ class Talks extends React.Component {
         });
     };
 
+    getIframeSrc = (media) => {
+        const {theme} = this.props;
+
+        if (!theme) {
+            return media.src;
+        }
+
+        try {
+            const url = new URL(media.src);
+            url.searchParams.set("theme", theme);
+            return url.toString();
+        } catch (error) {
+            const separator = media.src.includes("?") ? "&" : "?";
+            return `${media.src}${separator}theme=${theme}`;
+        }
+    };
+
     renderMediaPreview = () => {
         const {activePost} = this.state;
 
@@ -128,10 +145,11 @@ class Talks extends React.Component {
         }
 
         if (media.type === "iframe") {
+            const iframeSrc = this.getIframeSrc(media);
             return (
                 <div className={previewClass}>
                     <iframe
-                        src={media.src}
+                        src={iframeSrc}
                         title={media.title || activePost.titles.join(" ")}
                         className="talks__media-content"
                         allow="fullscreen"
@@ -213,6 +231,7 @@ class Talks extends React.Component {
 
 Talks.propTypes = {
     name: PropTypes.string.isRequired,
+    theme: PropTypes.oneOf(["light", "dark"]),
     positions: PropTypes.arrayOf(
         PropTypes.shape({
             title: PropTypes.string.isRequired,
@@ -249,6 +268,7 @@ Talks.propTypes = {
 
 Talks.defaultProps = {
     ...talksConfig,
+    theme: "light",
 };
 
 export default Talks;

@@ -115,14 +115,14 @@ const App = () => {
     const routerRoutes = useMemo(() => (
         <Routes>
                 <Route path="/" element={<OpenSource {...openSourceConfig} />} />
-                <Route path="/talks" element={<Talks {...talksConfig} />} />
+                <Route path="/talks" element={<Talks {...talksConfig} theme={theme} />} />
                 <Route path="/about" element={<About {...aboutConfig} />} />
                 <Route path="/research" element={<Research {...researchConfig} />} />
                 <Route path="/connect" element={<Connect {...connectConfig} />} />
                 <Route path="/credits" element={<Credits {...creditsConfig} />} />
                 <Route path="/blog/" element={<RedirectToSubstack />} />
         </Routes>
-    ), []);
+    ), [theme]);
 
     return (
         <Router>
