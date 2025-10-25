@@ -28,7 +28,7 @@ const talksConfig = {
             details: ["AI-2025 (BCS SGAI), Cambridge, UK", "Dec. 2025"],
             media: {
                 type: "iframe",
-                src: "https://embed.figma.com/slides/kwRQKCUvF3bhJ5IZEU1CrY/Slides-BCS-SGAI?node-id=1-288&embed-host=share",
+                src: "https://embed.figma.com/deck/kwRQKCUvF3bhJ5IZEU1CrY/Slides-BCS-SGAI?node-id=1-288&viewport=-121%2C-42%2C0.57&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&embed-host=share",
                 aspect: "landscape",
                 title: "AI-2025 Slides",
                 figmaLink:
@@ -42,7 +42,7 @@ const talksConfig = {
             details: ["AIDA (UKC), Canterbury, UK", "Nov. 2025"],
             media: {
                 type: "iframe",
-                src: "https://embed.figma.com/slides/87E2IvG37lkmcxHxuUsSHW/Slides-AIDA?node-id=1-288&embed-host=share",
+                src: "https://embed.figma.com/deck/87E2IvG37lkmcxHxuUsSHW/Slides-AIDA?node-id=1-288&viewport=-5072%2C-42%2C0.57&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&embed-host=share",
                 aspect: "landscape",
                 title: "AIDA Slides",
                 figmaLink: "https://www.figma.com/deck/87E2IvG37lkmcxHxuUsSHW/Slides-AIDA?node-id=1-288",
@@ -55,7 +55,7 @@ const talksConfig = {
             details: ["BIBM", "Lisbon, Portugal", "Dec. 2024"],
             media: {
                 type: "iframe",
-                src: "https://embed.figma.com/slides/hXJUNQENx8LV7jucKDZlR8/BIBM-2024?node-id=1-588&embed-host=share",
+                src: "https://embed.figma.com/deck/hXJUNQENx8LV7jucKDZlR8/BIBM-2024?node-id=1-588&viewport=-121%2C-42%2C0.57&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&embed-host=share",
                 aspect: "landscape",
                 title: "BIBM Slides",
                 figmaLink: "https://www.figma.com/deck/hXJUNQENx8LV7jucKDZlR8/BIBM-2024?node-id=1-588",
