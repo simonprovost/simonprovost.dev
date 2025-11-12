@@ -8,7 +8,7 @@ const aboutConfig = {
             organizationLink: "https://www.kent.ac.uk/",
             gradientLines: [
                 {text: "PhD student"},
-                {text: "@ UKC", italic: true},
+                {text: "@ UKC, AIDA lab", italic: true},
             ],
         },
         {
@@ -17,7 +17,7 @@ const aboutConfig = {
             organizationLink: "https://life-epi-psych.github.io/",
             gradientLines: [
                 {text: "Inc. Research Intern"},
-                {text: "@ University of Edinburgh, LEAP-group", italic: true},
+                {text: "@ University of Edinburgh, LEAP group", italic: true},
             ],
         },
         {
