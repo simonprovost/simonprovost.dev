@@ -3,11 +3,13 @@ import PropTypes from "prop-types";
 import AcademiaHeader from "../../components/academiaHeader/academiaHeader";
 import SocialsList from "../../components/socialsList/socialsList";
 import connectConfig from "../../configs/connectConfig";
+import withNavigation from "../../utils/withNavigation";
 import "./connect.css";
 
 class Connect extends React.Component {
     handleCompassClick = () => {
-        window.open("/", "_self");
+        const {navigate} = this.props;
+        navigate("/");
     };
 
     render() {
@@ -33,8 +35,6 @@ class Connect extends React.Component {
                                 delayIncrement: 0.08,
                                 initialDelayRatio: 1,
                             }}
-                            customSrc="/rive/head_sub_pages.riv"
-                            isSubpage={true}
                         />
                         <div className="connect__content-container">
                             <SocialsList
@@ -62,10 +62,11 @@ Connect.propTypes = {
             url: PropTypes.string.isRequired,
         })
     ).isRequired,
+    navigate: PropTypes.func.isRequired,
 };
 
 Connect.defaultProps = {
     ...connectConfig,
 };
 
-export default Connect;
+export default withNavigation(Connect);
