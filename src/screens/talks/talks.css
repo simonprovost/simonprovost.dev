@@ -327,7 +327,20 @@ body.theme-dark .talks__media-toolbar-button--disabled {
 
     .talks__media-preview-column {
         padding: 0;
+    }
+
+    .talks__media-preview-column--mobile-hidden {
         display: none;
+    }
+
+    .talks__media-preview-column--mobile-visible {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        inset: 0;
+        padding: clamp(24px, 8vw, 40px);
+        z-index: 1250;
     }
 
     .talks__media-preview {
@@ -346,11 +359,18 @@ body.theme-dark .talks__media-toolbar-button--disabled {
     .talks__media-toolbar {
         position: static;
         transform: none;
+        margin: 0 auto;
         flex-direction: row;
         padding: 0.5rem 0.6rem;
         gap: 0.65rem;
         margin-top: 0.5rem;
         border-radius: 999px;
+    }
+
+    .talks__media-preview-wrapper--expanded .talks__media-toolbar {
+        position: static;
+        transform: none;
+        margin: 0 auto;
     }
 }
 
@@ -376,10 +396,6 @@ body.theme-dark .talks__media-toolbar-button--disabled {
 }
 
 @media (max-width: 768px) {
-    .talks__media-preview-column {
-        display: none;
-    }
-
     .talks__media-preview {
         aspect-ratio: 16 / 9;
     }

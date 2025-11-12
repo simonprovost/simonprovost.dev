@@ -15,9 +15,17 @@ class Talks extends React.Component {
             hoveredPostId: null,
             showLockHint: true,
             isMediaExpanded: false,
+            isMobileView: false,
         };
         this.hoverUnlockTimeout = null;
         this.originalBodyOverflow = null;
+    }
+
+    componentDidMount() {
+        if (typeof window !== "undefined") {
+            this.updateViewportMode();
+            window.addEventListener("resize", this.handleResize);
+        }
     }
 
     componentWillUnmount() {
@@ -28,6 +36,10 @@ class Talks extends React.Component {
         if (this.state.isMediaExpanded) {
             document.removeEventListener("keydown", this.handleKeyDown);
             document.body.style.overflow = this.originalBodyOverflow || "";
+        }
+
+        if (typeof window !== "undefined") {
+            window.removeEventListener("resize", this.handleResize);
         }
     }
 
@@ -44,13 +56,40 @@ class Talks extends React.Component {
         }
     }
 
+    handleResize = () => {
+        this.updateViewportMode();
+    };
+
+    updateViewportMode = () => {
+        if (typeof window === "undefined") {
+            return;
+        }
+
+        const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+        this.setState((prevState) => {
+            if (prevState.isMobileView === isMobile) {
+                return null;
+            }
+
+            return {
+                isMobileView: isMobile,
+                isMediaExpanded: isMobile ? prevState.isMediaExpanded : false,
+            };
+        });
+    };
+
     handleCompassClick = () => {
         const {navigate} = this.props;
         navigate("/");
     };
 
     handlePostHover = (post) => {
-        const {lockedPostId} = this.state;
+        const {lockedPostId, isMobileView} = this.state;
+
+        if (isMobileView) {
+            return;
+        }
 
         if (this.hoverUnlockTimeout) {
             clearTimeout(this.hoverUnlockTimeout);
@@ -102,13 +141,14 @@ class Talks extends React.Component {
             const isSamePostLocked = prevState.lockedPostId === post.id;
             const nextLockedPostId = isSamePostLocked ? null : post.id;
             const shouldHideLockHint = !isSamePostLocked && prevState.showLockHint;
+            const shouldExpandOnMobile = prevState.isMobileView && !isSamePostLocked;
 
             return {
                 lockedPostId: nextLockedPostId,
                 activePost: post,
                 hoveredPostId: post.id,
                 showLockHint: shouldHideLockHint ? false : prevState.showLockHint,
-                isMediaExpanded: false,
+                isMediaExpanded: prevState.isMobileView ? shouldExpandOnMobile : false,
             };
         });
     };
@@ -151,7 +191,7 @@ class Talks extends React.Component {
     };
 
     renderMediaPreview = () => {
-        const {activePost, isMediaExpanded} = this.state;
+        const {activePost, isMediaExpanded, isMobileView} = this.state;
 
         if (!activePost) {
             return null;
@@ -162,8 +202,14 @@ class Talks extends React.Component {
             return null;
         }
 
+        if (isMobileView && !isMediaExpanded) {
+            return null;
+        }
+
         const previewClass = `talks__media-preview ${media.aspect === "portrait" ? "portrait" : "landscape"}`;
-        const wrapperClass = `talks__media-preview-wrapper${isMediaExpanded ? " talks__media-preview-wrapper--expanded" : ""}`;
+        const wrapperClass = `talks__media-preview-wrapper${
+            isMediaExpanded ? " talks__media-preview-wrapper--expanded" : ""
+        }`;
         const figmaLink = media.figmaLink || media.src;
         const pdfLink = media.pdfLink || "";
         const hasPdfLink = Boolean(pdfLink);
@@ -302,11 +348,18 @@ class Talks extends React.Component {
 
     render() {
         const {name, positions, tabs, posts, showTitle, navigate} = this.props;
-        const {lockedPostId, activePost, showLockHint, isMediaExpanded} = this.state;
+        const {lockedPostId, activePost, showLockHint, isMediaExpanded, isMobileView} = this.state;
         const contentContainerClassName = `talks__content-container${
             showLockHint ? " talks__content-container--hint-visible" : ""
         }`;
         const mediaPreview = this.renderMediaPreview();
+        let mediaPreviewColumnClassName = "talks__media-preview-column";
+
+        if (isMobileView) {
+            mediaPreviewColumnClassName += isMediaExpanded
+                ? " talks__media-preview-column--mobile-visible"
+                : " talks__media-preview-column--mobile-hidden";
+        }
 
         return (
             <div className="talks__container">
@@ -365,7 +418,7 @@ class Talks extends React.Component {
                             />
                         </div>
                     </div>
-                    <div className="talks__media-preview-column">{mediaPreview}</div>
+                    <div className={mediaPreviewColumnClassName}>{mediaPreview}</div>
                 </div>
             </div>
         );
