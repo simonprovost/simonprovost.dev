@@ -6,6 +6,8 @@ import openSourceConfig from "../../configs/openSourceConfig";
 import withNavigation from "../../utils/withNavigation";
 import "./openSource.css";
 
+let hasMountedOpenSourcePreviously = false;
+
 class OpenSource extends React.Component {
     constructor(props) {
         super(props);
@@ -41,6 +43,13 @@ class OpenSource extends React.Component {
             minimumVelocityThreshold: 6,
             restDuration: 0.6,
         };
+
+        this.initialHoverDelay = 3000;
+        this.initialHoverSuppressed = hasMountedOpenSourcePreviously;
+        this.initialHoverTimerId = null;
+        this.isAvatarHovered = false;
+
+        hasMountedOpenSourcePreviously = true;
     }
 
     handleCompassClick = () => {
@@ -156,6 +165,8 @@ class OpenSource extends React.Component {
         this.avatarLink.removeEventListener("touchcancel", this.handleAvatarLeave);
 
         this.stopSpinAnimationLoop(true);
+        this.clearInitialHoverTimer();
+        this.isAvatarHovered = false;
 
         this.avatarLink = null;
         this.avatarNode = null;
@@ -165,6 +176,19 @@ class OpenSource extends React.Component {
         if (this.prefersReducedMotion) {
             return;
         }
+
+        this.isAvatarHovered = true;
+
+        if (this.initialHoverSuppressed) {
+            if (!this.initialHoverTimerId) {
+                this.initialHoverTimerId = window.setTimeout(
+                    this.handleInitialHoverTimeout,
+                    this.initialHoverDelay
+                );
+            }
+            return;
+        }
+
         this.setSpinTarget(this.spinConfig.cruiseVelocity);
     };
 
@@ -172,7 +196,37 @@ class OpenSource extends React.Component {
         if (this.prefersReducedMotion) {
             return;
         }
+
+        this.isAvatarHovered = false;
+
+        if (this.initialHoverSuppressed) {
+            this.initialHoverSuppressed = false;
+            this.clearInitialHoverTimer();
+            return;
+        }
+
         this.setSpinTarget(0);
+    };
+
+    handleInitialHoverTimeout = () => {
+        this.initialHoverTimerId = null;
+
+        if (!this.initialHoverSuppressed) {
+            return;
+        }
+
+        this.initialHoverSuppressed = false;
+
+        if (this.isAvatarHovered && this.avatarNode) {
+            this.setSpinTarget(this.spinConfig.cruiseVelocity);
+        }
+    };
+
+    clearInitialHoverTimer = () => {
+        if (this.initialHoverTimerId) {
+            window.clearTimeout(this.initialHoverTimerId);
+            this.initialHoverTimerId = null;
+        }
     };
 
     setSpinTarget = (targetVelocity) => {
