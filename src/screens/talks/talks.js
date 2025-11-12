@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import AcademiaHeader from "../../components/academiaHeader/academiaHeader";
 import PostList from "../../components/postList/postList";
 import talksConfig from "../../configs/talksConfig";
+import withNavigation from "../../utils/withNavigation";
 import "./talks.css";
 
 class Talks extends React.Component {
@@ -44,7 +45,8 @@ class Talks extends React.Component {
     }
 
     handleCompassClick = () => {
-        window.open("/", "_self");
+        const {navigate} = this.props;
+        navigate("/");
     };
 
     handlePostHover = (post) => {
@@ -121,10 +123,6 @@ class Talks extends React.Component {
         this.setState((prevState) => ({
             isMediaExpanded: !prevState.isMediaExpanded,
         }));
-    };
-
-    handleOverlayClick = () => {
-        this.setState({isMediaExpanded: false});
     };
 
     openExternalLink = (link) => {
@@ -225,80 +223,85 @@ class Talks extends React.Component {
         }
 
         return (
-            <div className={wrapperClass}>
-                {mediaContent}
-                <div className="talks__media-toolbar">
-                    <button
-                        type="button"
-                        className="talks__media-toolbar-button"
-                        onClick={() => this.openExternalLink(figmaLink)}
-                        aria-label="Open slides in Figma"
-                    >
-                        <svg viewBox="0 0 24 24" aria-hidden="true" className="talks__media-toolbar-icon">
-                            <path d="M7.5 2.5h4a3.5 3.5 0 0 1 0 7h-4z" fill="currentColor" />
-                            <path d="M11.5 9.5a3.5 3.5 0 1 1 0 7h-4v-3.5a3.5 3.5 0 0 1 3.5-3.5z" fill="currentColor" />
-                            <path d="M7.5 2.5a3.5 3.5 0 1 0 0 7z" fill="currentColor" />
-                            <circle cx="7.5" cy="16" r="3.5" fill="currentColor" />
-                            <path d="M11.5 2.5H15A3.5 3.5 0 1 1 15 9h-3.5z" fill="currentColor" />
-                        </svg>
-                        <span className="talks__sr-only">Open in Figma</span>
-                    </button>
-                    <button
-                        type="button"
-                        className={`talks__media-toolbar-button${isMediaExpanded ? " talks__media-toolbar-button--active" : ""}`}
-                        onClick={this.handleExpandToggle}
-                        aria-label={enlargeLabel}
-                        aria-pressed={isMediaExpanded}
-                    >
-                        <svg viewBox="0 0 24 24" aria-hidden="true" className="talks__media-toolbar-icon">
-                            <path
-                                d="M5 5h6v2H7v4H5zm14 0v6h-2V7h-4V5zm-6 14h6v-6h-2v4h-4zm-2-6H5v6h6v-2H7v-4z"
-                                fill="currentColor"
-                            />
-                        </svg>
-                        <span className="talks__sr-only">{enlargeLabel}</span>
-                    </button>
-                    <button
-                        type="button"
-                        className={`talks__media-toolbar-button${
-                            hasPdfLink ? "" : " talks__media-toolbar-button--disabled"
-                        }`}
-                        onClick={() => this.openExternalLink(pdfLink)}
-                        aria-label={hasPdfLink ? "Download PDF" : "PDF unavailable"}
-                        disabled={!hasPdfLink}
-                    >
-                        <svg viewBox="0 0 24 24" aria-hidden="true" className="talks__media-toolbar-icon">
-                            <path
-                                d="M6 3h9l4 4v14H6z"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="1.5"
-                                strokeLinejoin="round"
-                            />
-                            <path
-                                d="M15 3v4h4"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="1.5"
-                                strokeLinejoin="round"
-                            />
-                            <path
-                                d="M9 11.5h1.25a1.75 1.75 0 0 1 0 3.5H9zm3.5 0h1a1.5 1.5 0 0 1 0 3h-1zM9 13.25h1"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="1.4"
-                                strokeLinecap="round"
-                            />
-                        </svg>
-                        <span className="talks__sr-only">Download PDF</span>
-                    </button>
+            <>
+                {isMediaExpanded && <div className="talks__media-overlay" aria-hidden="true" />}
+                <div className={wrapperClass}>
+                    {mediaContent}
+                    <div className="talks__media-toolbar">
+                        <button
+                            type="button"
+                            className="talks__media-toolbar-button"
+                            onClick={() => this.openExternalLink(figmaLink)}
+                            aria-label="Open slides in Figma"
+                        >
+                            <svg viewBox="0 0 24 24" aria-hidden="true" className="talks__media-toolbar-icon">
+                                <path d="M7.5 2.5h4a3.5 3.5 0 0 1 0 7h-4z" fill="currentColor" />
+                                <path d="M11.5 9.5a3.5 3.5 0 1 1 0 7h-4v-3.5a3.5 3.5 0 0 1 3.5-3.5z" fill="currentColor" />
+                                <path d="M7.5 2.5a3.5 3.5 0 1 0 0 7z" fill="currentColor" />
+                                <circle cx="7.5" cy="16" r="3.5" fill="currentColor" />
+                                <path d="M11.5 2.5H15A3.5 3.5 0 1 1 15 9h-3.5z" fill="currentColor" />
+                            </svg>
+                            <span className="talks__sr-only">Open in Figma</span>
+                        </button>
+                        <button
+                            type="button"
+                            className={`talks__media-toolbar-button${
+                                isMediaExpanded ? " talks__media-toolbar-button--active" : ""
+                            }`}
+                            onClick={this.handleExpandToggle}
+                            aria-label={enlargeLabel}
+                            aria-pressed={isMediaExpanded}
+                        >
+                            <svg viewBox="0 0 24 24" aria-hidden="true" className="talks__media-toolbar-icon">
+                                <path
+                                    d="M5 5h6v2H7v4H5zm14 0v6h-2V7h-4V5zm-6 14h6v-6h-2v4h-4zm-2-6H5v6h6v-2H7v-4z"
+                                    fill="currentColor"
+                                />
+                            </svg>
+                            <span className="talks__sr-only">{enlargeLabel}</span>
+                        </button>
+                        <button
+                            type="button"
+                            className={`talks__media-toolbar-button${
+                                hasPdfLink ? "" : " talks__media-toolbar-button--disabled"
+                            }`}
+                            onClick={() => this.openExternalLink(pdfLink)}
+                            aria-label={hasPdfLink ? "Download PDF" : "PDF unavailable"}
+                            disabled={!hasPdfLink}
+                        >
+                            <svg viewBox="0 0 24 24" aria-hidden="true" className="talks__media-toolbar-icon">
+                                <path
+                                    d="M6 3h9l4 4v14H6z"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="1.5"
+                                    strokeLinejoin="round"
+                                />
+                                <path
+                                    d="M15 3v4h4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="1.5"
+                                    strokeLinejoin="round"
+                                />
+                                <path
+                                    d="M9 11.5h1.25a1.75 1.75 0 0 1 0 3.5H9zm3.5 0h1a1.5 1.5 0 0 1 0 3h-1zM9 13.25h1"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="1.4"
+                                    strokeLinecap="round"
+                                />
+                            </svg>
+                            <span className="talks__sr-only">Download PDF</span>
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </>
         );
     };
 
     render() {
-        const {name, positions, tabs, posts, showTitle} = this.props;
+        const {name, positions, tabs, posts, showTitle, navigate} = this.props;
         const {lockedPostId, activePost, showLockHint, isMediaExpanded} = this.state;
         const contentContainerClassName = `talks__content-container${
             showLockHint ? " talks__content-container--hint-visible" : ""
@@ -307,28 +310,34 @@ class Talks extends React.Component {
 
         return (
             <div className="talks__container">
-                <div className="talks__header-and-content-container">
-                    <div className="talks__header-and-content">
-                        <AcademiaHeader
-                            name={name}
-                            positions={positions}
-                            tabs={tabs.map((tab) => tab.name)}
-                            onCompassClick={this.handleCompassClick}
-                            onTabClick={(tab) => {
-                                window.location.href = `/${tab.toLowerCase()}`;
-                            }}
-                            positionIndex={0}
-                            snakeEffectProps={{
-                                duration: 0.3,
-                                delayIncrement: 0.08,
-                                initialDelayRatio: 1,
-                            }}
-                            showInfo={false}
-                            showTabs={false}
-                            showTitle={showTitle}
-                            customSrc="/rive/head_sub_pages.riv"
-                            isSubpage={true}
-                        />
+                <div className="talks__header">
+                    <AcademiaHeader
+                        name={name}
+                        positions={positions}
+                        tabs={tabs.map((tab) => tab.name)}
+                        onCompassClick={this.handleCompassClick}
+                        onTabClick={(tabName) => {
+                            const matchedTab = tabs.find((tab) => tab.name === tabName);
+
+                            if (matchedTab?.path) {
+                                navigate(matchedTab.path);
+                            } else {
+                                navigate(`/${tabName.toLowerCase()}`);
+                            }
+                        }}
+                        positionIndex={0}
+                        snakeEffectProps={{
+                            duration: 0.3,
+                            delayIncrement: 0.08,
+                            initialDelayRatio: 1,
+                        }}
+                        showInfo={false}
+                        showTabs={false}
+                        showTitle={showTitle}
+                    />
+                </div>
+                <div className="talks__content">
+                    <div className="talks__list-column">
                         <div className={contentContainerClassName}>
                             <PostList
                                 posts={posts}
@@ -356,15 +365,8 @@ class Talks extends React.Component {
                             />
                         </div>
                     </div>
+                    <div className="talks__media-preview-column">{mediaPreview}</div>
                 </div>
-                <div className="talks__media-preview-container">{mediaPreview}</div>
-                {isMediaExpanded && (
-                    <div
-                        className="talks__media-overlay"
-                        onClick={this.handleOverlayClick}
-                        aria-hidden="true"
-                    />
-                )}
             </div>
         );
     }
@@ -392,6 +394,7 @@ Talks.propTypes = {
         })
     ).isRequired,
     showTitle: PropTypes.string,
+    navigate: PropTypes.func.isRequired,
     posts: PropTypes.arrayOf(
         PropTypes.shape({
             id: PropTypes.string.isRequired,
@@ -414,4 +417,4 @@ Talks.defaultProps = {
     theme: "light",
 };
 
-export default Talks;
+export default withNavigation(Talks);

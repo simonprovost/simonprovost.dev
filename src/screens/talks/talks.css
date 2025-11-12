@@ -1,45 +1,55 @@
 .talks__container {
     display: flex;
-    height: 100vh;
-    width: 100%;
-    color: var(--color-text-primary);
-}
-
-.talks__header-and-content-container {
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    height: auto;
-    width: 50%;
-}
-
-.talks__header-and-content {
-    display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: flex-start;
-    height: auto;
-    align-self: flex-start;
-    min-width: 400px;
-    padding: 6rem 2rem 0 0;
+    min-height: 100vh;
+    width: 100%;
+    color: var(--color-text-primary);
+    max-width: var(--layout-max-width);
+    margin: 0 auto;
+    padding: var(--layout-padding-block) var(--layout-padding-inline);
+    box-sizing: border-box;
+}
+
+.talks__header {
+    width: min(720px, 100%);
+}
+
+.talks__content {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: clamp(40px, 5vw, 88px);
+}
+
+.talks__list-column {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: min(620px, 100%);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(16px, 2vw, 24px);
 }
 
 .talks__content-container {
-    margin-top: 1.5rem;
     width: 100%;
 }
 
-.talks__media-preview-container {
-    width: 50%;
-    max-width: 50%;
+.talks__media-preview-column {
+    flex: 0 1 560px;
+    max-width: min(560px, 46vw);
+    width: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 4.5rem 4vw 4.5rem 2vw;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-sizing: border-box;
+    position: sticky;
+    top: clamp(48px, 8vh, 96px);
 }
 
 .talks__media-preview-wrapper {
     position: relative;
+    isolation: isolate;
     display: inline-block;
     width: 100%;
     transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
@@ -55,7 +65,7 @@
     transform: translate(-50%, -50%);
     width: min(90vw, 1280px);
     max-width: 90vw;
-    z-index: 1001;
+    z-index: 1300;
 }
 
 .talks__media-preview-wrapper--expanded .talks__media-preview {
@@ -70,6 +80,7 @@
     right: auto;
     top: var(--talks-toolbar-gap);
     transform: translateX(calc(-100% - var(--talks-toolbar-gap)));
+    z-index: 1301;
 }
 
 .talks__media-toolbar {
@@ -169,6 +180,17 @@ body.theme-dark .talks__media-toolbar-button {
     box-shadow: none;
 }
 
+.talks__media-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    z-index: 1200;
+    animation: talks__overlayFadeIn 0.25s ease;
+    pointer-events: none;
+}
+
 body.theme-dark .talks__media-toolbar-button--active {
     background: var(--color-link);
     color: #ffffff;
@@ -183,16 +205,6 @@ body.theme-dark .talks__media-toolbar-button--disabled {
 .talks__media-toolbar-icon {
     width: 1.2rem;
     height: 1.2rem;
-}
-
-.talks__media-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.55);
-    backdrop-filter: blur(4px);
-    z-index: 1000;
-    animation: talks__overlayFadeIn 0.25s ease;
-    cursor: zoom-out;
 }
 
 .talks__sr-only {
@@ -291,23 +303,31 @@ body.theme-dark .talks__media-toolbar-button--disabled {
     }
 }
 
+@media (max-width: 1200px) {
+    .talks__media-preview-column {
+        position: static;
+    }
+}
+
 @media (max-width: 1024px) {
     .talks__container {
+        padding: clamp(32px, 10vw, 64px) clamp(24px, 8vw, 48px);
+        gap: clamp(24px, 8vw, 48px);
+    }
+
+    .talks__content {
         flex-direction: column;
-        height: auto;
     }
 
-    .talks__header-and-content-container,
-    .talks__media-preview-container {
+    .talks__list-column,
+    .talks__media-preview-column {
+        max-width: 100%;
         width: 100%;
-        padding: 2rem 1.5rem;
-        max-width: none;
     }
 
-    .talks__header-and-content {
-        max-width: none;
-        min-width: auto;
-        padding: 3rem 0 0;
+    .talks__media-preview-column {
+        padding: 0;
+        display: none;
     }
 
     .talks__media-preview {
@@ -356,14 +376,8 @@ body.theme-dark .talks__media-toolbar-button--disabled {
 }
 
 @media (max-width: 768px) {
-    .talks__header-and-content {
-        min-width: auto;
-        width: 100%;
-        padding: 1.5rem 0;
-    }
-
-    .talks__media-preview-container {
-        padding: 1.5rem 1rem 3rem;
+    .talks__media-preview-column {
+        display: none;
     }
 
     .talks__media-preview {

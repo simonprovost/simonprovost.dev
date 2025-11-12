@@ -1,32 +1,47 @@
 .about__main_container {
-    display: flex;
-    height: 100vh;
+    display: grid;
+    grid-template-columns: minmax(320px, 680px);
+    gap: clamp(24px, 6vw, 64px);
     width: 100%;
+    min-height: 100vh;
     color: var(--color-text-primary);
+    max-width: var(--layout-max-width);
+    margin: 0 auto;
+    padding: var(--layout-padding-block) var(--layout-padding-inline);
+    box-sizing: border-box;
+    justify-content: flex-start;
+    justify-items: flex-start;
 }
 
 .about__header-and-content-container {
+    grid-column: 1;
     display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    height: auto;
-    width: 50%;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 
 .about__header-and-content {
+    width: min(640px, 100%);
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    height: auto;
-    align-self: flex-start;
-    min-width: 400px;
-    padding-top: 6rem 2rem;
+    gap: clamp(1px, 1px, 1px);
+}
+
+.about__header-and-content .academiaHeader__logo-container {
+    width: clamp(6rem, 8vw + 4rem, 9rem);
+    height: clamp(6rem, 8vw + 4rem, 9rem);
+    margin-bottom: clamp(20px, 4vw, 32px);
 }
 
 .about__content-container {
-    margin-top: 1.5rem;
     width: 100%;
+}
+
+.about__content-snake-wrapper {
+    width: 100%;
+    display: block;
+    position: static;
+    overflow: visible;
 }
 
 .about__container {
@@ -38,6 +53,7 @@
     font-family: "Georgia", serif;
     color: var(--color-text-primary);
     line-height: 1.8;
+    gap: 2rem;
 }
 
 .about__download-cv-container {
@@ -45,7 +61,6 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin: 2rem 0;
 }
 
 .about__download-cv-wrapper {
@@ -75,7 +90,6 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin-bottom: 2rem;
 }
 
 .about__gradient-card-wrapper {
@@ -85,7 +99,6 @@
 }
 
 .about__intro-section {
-    margin-bottom: 2rem;
     font-size: 21px;
 }
 
@@ -97,117 +110,181 @@
     display: flex;
     flex-direction: row;
     gap: 2rem;
-    margin-bottom: 2rem;
+    width: 100%;
 }
 
 .about__personal-content {
     width: 50%;
     font-size: 1rem;
     line-height: 1.5;
+    flex: 1 1 50%;
 }
 
 .about__closing-thoughts {
     font-style: italic;
     font-size: 1.1rem;
     text-align: center;
+    width: 100%;
 }
 
-@media (max-width: 768px) {
-    html,
-    body {
-        overflow-x: hidden;
-    }
+.about__container p,
+.about__download-cv-link,
+.about__closing-thoughts p {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+}
 
+.about__closing-thoughts p {
+    margin: 0 auto;
+    max-width: 58ch;
+}
+
+@media (max-width: 1024px) {
     .about__main_container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        width: 100%;
-        height: auto;
-        padding: 1rem 0;
-        box-sizing: border-box;
-        overflow-x: hidden;
+        grid-template-columns: minmax(0, 1fr);
+        padding: clamp(32px, 10vw, 64px) clamp(24px, 8vw, 48px);
     }
 
     .about__header-and-content-container {
+        grid-column: 1;
         width: 100%;
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 0 1rem;
-        box-sizing: border-box;
-        overflow-x: hidden;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        text-align: left;
-        justify-content: flex-start;
     }
 
     .about__header-and-content {
         width: 100%;
-        margin: 0;
-        padding: 1rem 0;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        text-align: left;
-        overflow-x: hidden;
-        padding-top: 2rem;
-        min-width: 0 !important;
-    }
-
-    .about__content-container {
-        width: 100%;
-        max-width: 600px;
-        margin: 0 auto;
-        text-align: left;
-        padding: 1rem 0;
-        box-sizing: border-box;
-        overflow-x: hidden;
     }
 
     .about__container {
-        max-width: 600px !important;
-        width: 100%;
-        margin: 0 auto;
-        padding: 0;
+        max-width: 100%;
     }
 
-    .about__personal-section {
-        flex-direction: column;
-        gap: 1rem;
-        margin-bottom: 2rem;
+    .about__intro-section {
+        font-size: 19px;
     }
 
     .about__personal-content {
-        width: 100%;
         font-size: 0.95rem;
-        line-height: 1.4;
-    }
-
-    .about__gradient-card-container {
-        justify-content: center;
-        margin-bottom: 1.5rem;
-    }
-
-    .about__gradient-card-wrapper {
-        width: 100%;
-    }
-
-    .about__download-cv-container {
-        margin: 1.5rem 0;
-    }
-
-    .about__download-cv-link {
-        font-size: 1rem;
     }
 
     .about__closing-thoughts {
         font-size: 1rem;
-        margin-top: 2rem;
-        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .about__container {
+        gap: 1.5rem;
+    }
+
+    .about__gradient-card-container,
+    .about__download-cv-container {
+        justify-content: flex-start;
+    }
+
+    .about__gradient-card-wrapper,
+    .about__download-cv-wrapper {
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    .about__download-cv-wrapper {
+        align-items: flex-start;
+    }
+
+    .about__download-cv-link {
+        text-align: left;
+    }
+
+    .about__closing-thoughts {
+        text-align: left;
         padding: 0 1rem;
+    }
+
+    .about__closing-thoughts p {
+        margin: 0;
+        max-width: 100%;
+    }
+
+    .about__personal-section {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        gap: 1.5rem;
+    }
+
+    .about__personal-content {
+        width: 100%;
+        font-size: 0.88rem;
+        line-height: 1.45;
+        flex-basis: auto;
+    }
+
+    .about__download-cv-link {
+        font-size: 0.95rem;
+    }
+
+    .about__closing-thoughts {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .about__intro-section {
+        font-size: 18px;
+    }
+
+    .about__container {
+        gap: 1.25rem;
+    }
+
+    .about__personal-section {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        gap: 1.25rem;
+    }
+
+    .about__personal-content {
+        width: 100%;
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+
+    .about__download-cv-link {
+        font-size: 0.88rem;
+    }
+
+    .about__closing-thoughts {
+        font-size: 0.82rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .about__main_container {
+        padding: clamp(24px, 12vw, 40px) clamp(16px, 8vw, 28px);
+    }
+
+    .about__intro-section {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .about__personal-content {
+        font-size: 0.78rem;
+        line-height: 1.35;
+    }
+
+    .about__gradient-card-container,
+    .about__closing-thoughts {
+        display: none;
+    }
+
+    .about__gradient-card-container {
+        padding: 0;
+    }
+
+    .about__closing-thoughts {
+        font-size: 0.76rem;
     }
 }

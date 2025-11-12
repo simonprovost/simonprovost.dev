@@ -1,28 +1,20 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import {BrowserRouter as Router, Navigate, Route, Routes} from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
-import researchConfig from "./configs/researchConfig";
+import publicationsConfig from "./configs/publicationsConfig";
+import peerReviewsConfig from "./configs/peerReviewsConfig";
 import connectConfig from "./configs/connectConfig";
 import aboutConfig from "./configs/aboutConfig";
 import openSourceConfig from "./configs/openSourceConfig";
 import talksConfig from "./configs/talksConfig";
-import creditsConfig from "./configs/creditsConfig";
 import OpenSource from "./screens/openSource/openSource";
 import Talks from "./screens/talks/talks";
 import About from "./screens/about/about";
-import Research from "./screens/research/research";
+import Publications from "./screens/publications/publications";
+import PeerReviews from "./screens/peerReviews/peerReviews";
 import Connect from "./screens/connect/connect";
-import Credits from "./screens/credits/credits";
 import { injectSpeedInsights } from "@vercel/speed-insights";
 import ThemeToggle from "./components/themeToggle/themeToggle";
-
-function RedirectToSubstack() {
-  useEffect(() => {
-    window.location.replace("https://simonprovost.substack.com/");
-  }, []);
-
-  return null;
-}
 
 const applyBodyClass = (theme) => {
     if (typeof document === "undefined") {
@@ -117,10 +109,11 @@ const App = () => {
                 <Route path="/" element={<OpenSource {...openSourceConfig} />} />
                 <Route path="/talks" element={<Talks {...talksConfig} theme={theme} />} />
                 <Route path="/about" element={<About {...aboutConfig} />} />
-                <Route path="/research" element={<Research {...researchConfig} />} />
+                <Route path="/publications" element={<Publications {...publicationsConfig} />} />
+                <Route path="/research" element={<Navigate to="/publications" replace />} />
+                <Route path="/peer-reviews" element={<PeerReviews {...peerReviewsConfig} />} />
                 <Route path="/connect" element={<Connect {...connectConfig} />} />
-                <Route path="/credits" element={<Credits {...creditsConfig} />} />
-                <Route path="/blog/" element={<RedirectToSubstack />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
     ), [theme]);
 

@@ -15,10 +15,10 @@ const openSourceConfig = {
     ],
     tabs: [
         {name: "About", path: "/about"},
-        {name: "Research", path: "/research"},
+        {name: "Publications", path: "/publications"},
+        {name: "Peer-Reviews", path: "/peer-reviews"},
         {name: "Talks", path: "/talks"},
         {name: "Connect", path: "/connect"},
-        {name: "Blog", path: "/blog"},
     ],
     posts: [
         {

@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./academiaHeader.css";
-import RiveHeadTracking from "../riveHeadTracking/riveHeadTracking";
 import SnakeEffectContainer from "../snakeEffect/snakeEffect";
 
 const AcademiaHeader = ({
@@ -16,7 +15,6 @@ const AcademiaHeader = ({
                             positionIndex = 0,
                             snakeEffectProps = {},
                             customSrc = null,
-                            isSubpage = false,
                         }) => {
     const {
         duration = 0.2,
@@ -35,12 +33,14 @@ const AcademiaHeader = ({
                     tabIndex="0"
                     onClick={onCompassClick}
                     onTouchStart={onCompassClick}
+                    className="academiaHeader__logo-link"
                 >
-                    <RiveHeadTracking
-                        className="academiaHeader__logo"
-                        src={process.env.PUBLIC_URL + `${customSrc || "/rive/head.riv"}`}
-                        stateMachineName="LookAround"
-                        isSubpage={isSubpage}
+                    <img
+                        className="academiaHeader__avatar"
+                        src="/images/avatar.png"
+                        alt="Site avatar"
+                        loading="lazy"
+                        decoding="async"
                     />
                 </a>
             </div>
@@ -63,7 +63,7 @@ const AcademiaHeader = ({
                                         <span
                                             className="academiaHeader__supervised-container"
                                             style={{
-                                                top: `-${0.5 + position.supervisors.length * 0.2}em`,
+                                                top: `-${0.1 + position.supervisors.length * 0.2}em`,
                                             }}
                                         >
                       <span className="academiaHeader__supervisor-line">Supervised by</span>

@@ -2,20 +2,39 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 16px 0;
+    justify-content: flex-start;
+    gap: clamp(1px, 1px, 1px);
+    padding: 0;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
+    width: 100%;
+    margin-bottom: 40px;
 }
 
 .academiaHeader__logo-container {
-    width: 180px;
-    height: 180px;
+    width: 2rem;
+    height: 2rem;
     pointer-events: auto;
+    margin-bottom: 20px;
 }
 
-.academiaHeader__logo {
+.academiaHeader__logo-link {
+    display: inline-block;
     width: 100%;
     height: 100%;
+}
+
+.academiaHeader__avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 9999px;
+    object-fit: cover;
+    transition: transform 0.2s ease;
+}
+
+.academiaHeader__logo-link:focus-visible .academiaHeader__avatar,
+.academiaHeader__logo-link:hover .academiaHeader__avatar {
+    transform: scale(1.05);
 }
 
 .academiaHeader__info-container {
@@ -28,8 +47,7 @@
     font-size: 16px;
     line-height: 24px;
     font-family: "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", "Helvetica Neue";
-    margin-bottom: 1.5rem;
-    margin-top: 1rem;
+    margin: 0;
 }
 
 .academiaHeader__name {
@@ -69,14 +87,14 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
-    row-gap: 16px;
+    flex-wrap: wrap;
+    row-gap: 12px;
     column-gap: 16px;
     transform: none;
     border: 0px solid rgb(229, 231, 235);
     font-size: 16px;
     line-height: 24px;
     font-family: "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", "Helvetica Neue";
-    margin-bottom: 1.5rem;
 }
 
 .academiaHeader__tab-link {
@@ -97,7 +115,6 @@
 }
 
 .academiaHeader__static-title {
-    margin-top: 2.5rem;
     font-size: 18px;
     font-weight: 800;
     color: var(--color-text-primary);
@@ -109,6 +126,8 @@
 .academiaHeader__positions-container {
     display: flex;
     flex-direction: column;
+    margin-top: -10px;
+    margin-bottom: 10px;
 }
 
 .academiaHeader__position-container {
@@ -158,18 +177,14 @@
 
 @media (max-width: 768px) {
     .academiaHeader__header-container {
-        padding: 8px 0;
-    }
-
-    .academiaHeader__logo-container {
-        width: 100px;
-        height: 100px;
+        gap: 16px;
+        min-height: auto;
+        margin-bottom: 10px;
     }
 
     .academiaHeader__info-container {
         font-size: 14px;
         line-height: 20px;
-        margin-bottom: 1rem;
     }
 
     .academiaHeader__name {

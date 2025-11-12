@@ -1,22 +1,33 @@
 import {Canvas} from "@react-three/fiber";
 import {motion} from "framer-motion";
-import {useState, useRef} from "react";
+import {useState, useRef, useMemo, useEffect} from "react";
+import PropTypes from "prop-types";
 import GrainyGradient from "../GrainyGradient/GrainyGradient";
 import SnakeEffectContainer from "../snakeEffect/snakeEffect";
 import "./GradientCard.css";
 
-const GradientCard = () => {
+const GradientCard = ({positions}) => {
     const [ripples, setRipples] = useState([]);
     const [currentTime, setCurrentTime] = useState(0);
     const [textIndex, setTextIndex] = useState(0);
     const cardRef = useRef(null);
     const rippleIdRef = useRef(0);
 
-    const texts = [
-        "PhD student <br/> <i> @ UKC </i>",
-        "Former Researcher <br/> <i> @ NYU, VIDA lab </i>",
-        "Former Researcher <br/> <i> @ NHS, via UoK </i>",
-    ];
+    const availablePositions = useMemo(
+        () => positions.filter(
+            (position) => Array.isArray(position.gradientLines) && position.gradientLines.length > 0
+        ),
+        [positions]
+    );
+
+    useEffect(() => {
+        if (availablePositions.length === 0) {
+            setTextIndex(0);
+            return;
+        }
+
+        setTextIndex((prevIndex) => prevIndex % availablePositions.length);
+    }, [availablePositions.length]);
 
     const handleTimeUpdate = (time) => {
         setCurrentTime(time);
@@ -42,8 +53,17 @@ const GradientCard = () => {
             setRipples((prev) => prev.filter((ripple) => ripple.id !== newRipple.id));
         }, 2000);
 
-        setTextIndex((prevIndex) => (prevIndex + 1) % texts.length);
+        if (availablePositions.length > 0) {
+            setTextIndex((prevIndex) => (prevIndex + 1) % availablePositions.length);
+        }
     };
+
+    if (availablePositions.length === 0) {
+        return null;
+    }
+
+    const currentPosition = availablePositions[textIndex] ?? availablePositions[0];
+    const lines = currentPosition?.gradientLines ?? [];
 
     return (
         <motion.div
@@ -71,10 +91,34 @@ const GradientCard = () => {
                 childStyle="gradient-card__text"
                 key={textIndex}
             >
-                <span dangerouslySetInnerHTML={{__html: texts[textIndex]}}/>
+                <span className="gradient-card__text">
+                    {lines.map((line, index) => (
+                        <span key={`${line.text}-${index}`}>
+                            {line.italic ? <i>{line.text}</i> : line.text}
+                            {index < lines.length - 1 && <br/>}
+                        </span>
+                    ))}
+                </span>
             </SnakeEffectContainer>
         </motion.div>
     );
+};
+
+GradientCard.defaultProps = {
+    positions: [],
+};
+
+GradientCard.propTypes = {
+    positions: PropTypes.arrayOf(
+        PropTypes.shape({
+            gradientLines: PropTypes.arrayOf(
+                PropTypes.shape({
+                    text: PropTypes.string.isRequired,
+                    italic: PropTypes.bool,
+                })
+            ).isRequired,
+        })
+    ),
 };
 
 export default GradientCard;

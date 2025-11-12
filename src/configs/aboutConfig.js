@@ -3,29 +3,39 @@ const aboutConfig = {
     cv_link: "https://drive.google.com/file/d/109UYJLIJ0qp2km9WtfPm5HEbb4O5voiD/view?usp=sharing",
     professional_positions: [
         {
-            title: "Ph.D.",
-            companyName: "University of Kent",
-            companyLink: "https://www.kent.ac.uk/",
-            supervisors: [
-                {
-                    name: "Prof. Alex A. Freitas",
-                    link: "https://scholar.google.com/citations?user=NEP3RPYAAAAJ",
-                },
+            role: "PhD student",
+            organization: "University of Kent",
+            organizationLink: "https://www.kent.ac.uk/",
+            gradientLines: [
+                {text: "PhD student"},
+                {text: "@ UKC", italic: true},
             ],
         },
         {
-            title: "Ex-Research Intern",
-            companyName: "NYU Tandon",
-            companyLink: "https://engineering.nyu.edu/",
-            supervisors: [
-                {
-                    name: "Prof. Juliana Freire",
-                    link: "https://engineering.nyu.edu/faculty/juliana-freire",
-                },
-                {
-                    name: "Prof. Claudio Silva",
-                    link: "https://engineering.nyu.edu/faculty/claudio-silva",
-                },
+            role: "Inc. Research Intern",
+            organization: "University of Edinburgh",
+            organizationLink: "https://life-epi-psych.github.io/",
+            gradientLines: [
+                {text: "Inc. Research Intern"},
+                {text: "@ University of Edinburgh, LEAP-group", italic: true},
+            ],
+        },
+        {
+            role: "Former Researcher",
+            organization: "NYU, VIDA Lab",
+            organizationLink: "https://engineering.nyu.edu/vida",
+            gradientLines: [
+                {text: "Former Researcher"},
+                {text: "@ NYU, VIDA lab", italic: true},
+            ],
+        },
+        {
+            role: "Former Researcher",
+            organization: "NHS (via University of Kent)",
+            organizationLink: "https://www.england.nhs.uk/",
+            gradientLines: [
+                {text: "Former Researcher"},
+                {text: "@ NHS, via UoK", italic: true},
             ],
         },
     ],
