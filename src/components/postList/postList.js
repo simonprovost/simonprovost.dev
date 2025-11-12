@@ -34,6 +34,30 @@ class PostList extends Component {
         };
     }
 
+    renderFormattedContent = (text, keyPrefix) => {
+        if (typeof text !== "string" || text.length === 0) {
+            return text;
+        }
+
+        const segments = text.split(/(\*\*[^*]+\*\*)/g).filter(Boolean);
+
+        return segments.map((segment, index) => {
+            if (segment.startsWith("**") && segment.endsWith("**")) {
+                return (
+                    <strong key={`${keyPrefix}-bold-${index}`}>
+                        {segment.slice(2, -2)}
+                    </strong>
+                );
+            }
+
+            return (
+                <React.Fragment key={`${keyPrefix}-text-${index}`}>
+                    {segment}
+                </React.Fragment>
+            );
+        });
+    };
+
     componentDidMount() {
         window.addEventListener("resize", this.handleResize);
         if (this.motionQuery) {
@@ -448,14 +472,27 @@ class PostList extends Component {
                                                     }`}
                                                     key={idx}
                                                 >
-                                                    {detail}
+                                                    {this.renderFormattedContent(
+                                                        detail,
+                                                        `${postKey}-detail-${idx}`
+                                                    )}
                                                 </span>
                                             ))}
                                         </div>
                                     ) : (
                                         <div className="post__details-container joined">
                                             <span className="post__details">
-                                                {post.details.join(" ")}
+                                                {post.details.map((detail, detailIdx) => (
+                                                    <React.Fragment
+                                                        key={`${postKey}-detail-joined-${detailIdx}`}
+                                                    >
+                                                        {detailIdx > 0 ? " " : null}
+                                                        {this.renderFormattedContent(
+                                                            detail,
+                                                            `${postKey}-detail-joined-${detailIdx}`
+                                                        )}
+                                                    </React.Fragment>
+                                                ))}
                                             </span>
                                         </div>
                                     )}
