@@ -7,7 +7,7 @@ const connectConfig = {
         {title: "ORCID", url: "https://orcid.org/0000-0001-8402-5464"},
         {title: "Blog", url: "https://simonprovost.substack.com/"},
         {title: "Stack Overflow", url: "https://stackoverflow.com/users/9814037/simon-provost"},
-        {title: "Email", url: "mailto:s.g.provost@kent.ac.uk"},
+        {title: "Email", url: "mailto:simon.gilbert.provost@gmail.com"},
         {title: "Bento", url: "https://bento.me/simon-provost"},
     ],
 };
