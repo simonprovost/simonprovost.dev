@@ -294,7 +294,8 @@ class PostList extends Component {
         if (customOnPostHover) {
             customOnPostHover(post);
         } else if (onPostHover) {
-            onPostHover(post.media);
+            const mediaPayload = post.media ?? null;
+            onPostHover(mediaPayload);
         }
     };
 
@@ -511,10 +512,13 @@ PostList.propTypes = {
         PropTypes.shape({
             titles: PropTypes.arrayOf(PropTypes.string).isRequired,
             details: PropTypes.arrayOf(PropTypes.string).isRequired,
-            media: PropTypes.shape({
-                type: PropTypes.oneOf(["image", "video", "iframe"]).isRequired,
-                src: PropTypes.string.isRequired,
-            }),
+            media: PropTypes.oneOfType([
+                PropTypes.shape({
+                    type: PropTypes.oneOf(["image", "video", "iframe"]).isRequired,
+                    src: PropTypes.string.isRequired,
+                }),
+                PropTypes.oneOf([null]),
+            ]),
             url: PropTypes.string,
         })
     ).isRequired,
