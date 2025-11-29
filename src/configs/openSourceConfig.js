@@ -66,7 +66,7 @@ const openSourceConfig = {
             details: ["Accepted | Open-Source @ NYU (VIDA)"],
             media: {
                 type: "video",
-                src: "videos/github_3.webm",
+                src: "videos/github_3.tiny.webm",
                 aspect: "landscape",
             },
             url: "https://github.com/VIDA-NYU/AutoDDG/pull/4",
@@ -76,7 +76,7 @@ const openSourceConfig = {
             details: ["In-Review | Open-Source @ NYU (VIDA)"],
             media: {
                 type: "video",
-                src: "videos/github_4.webm",
+                src: "videos/github_4.tiny.webm",
                 aspect: "landscape",
             },
             url: "https://github.com/VIDA-NYU/AutoDDG/pull/6",
@@ -86,7 +86,7 @@ const openSourceConfig = {
             details: ["In-Review | Open-Source @ TU/e (AMORE)"],
             media: {
                 type: "video",
-                src: "videos/github_1.webm",
+                src: "videos/github_1.tiny.webm",
                 aspect: "landscape",
             },
             url: "https://github.com/openml-labs/gama/pull/212",
@@ -96,7 +96,7 @@ const openSourceConfig = {
             details: ["In-Review | Open-Source @ TU/e (AMORE)"],
             media: {
                 type: "video",
-                src: "videos/github_2.webm",
+                src: "videos/github_2.tiny.webm",
                 aspect: "landscape",
             },
             url: "https://github.com/openml-labs/gama/pull/210",
