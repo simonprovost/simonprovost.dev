@@ -195,10 +195,18 @@
 }
 
 
+
 .opensource__shiny-banner-text {
   font-family: 'PP Editorial New', serif;
   font-style: italic;
+}
+
+body.theme-light .opensource__shiny-banner-text {
   color: #111;
+}
+
+body.theme-dark .opensource__shiny-banner-text {
+  color: #eee;
 }
 
 .opensource__shiny-banner .scroller {
@@ -225,11 +233,5 @@
   .opensource__shiny-banner .scroller {
     font-size: 2rem;
     line-height: 2.2rem;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .opensource__shiny-banner-text {
-    color: #eee;
   }
 }
