@@ -4,6 +4,7 @@ import AcademiaHeader from "../../components/academiaHeader/academiaHeader";
 import PostList from "../../components/postList/postList";
 import openSourceConfig from "../../configs/openSourceConfig";
 import withNavigation from "../../utils/withNavigation";
+import ScrollVelocity from "../../components/ScrollVelocity/ScrollVelocity";
 import "./openSource.css";
 
 let hasMountedOpenSourcePreviously = false;
@@ -528,94 +529,109 @@ class OpenSource extends React.Component {
     };
 
     render() {
-        const {name, positions, tabs, posts, navigate} = this.props;
-        const {media} = this.state;
+    const { name, positions, tabs, posts, navigate } = this.props;
+    const { media } = this.state;
 
-        const getPlaybackSrc = (mediaToRender) => {
-            if (!mediaToRender) {
-                return null;
-            }
+    const getPlaybackSrc = (mediaToRender) => {
+      if (!mediaToRender) return null;
+      const preloadedVideo = this.preloadedVideos.get(mediaToRender.src);
+      if (preloadedVideo?.videoEl?.currentSrc) {
+        return preloadedVideo.videoEl.currentSrc;
+      }
+      return mediaToRender.src;
+    };
 
-            const preloadedVideo = this.preloadedVideos.get(mediaToRender.src);
-            if (preloadedVideo?.videoEl?.currentSrc) {
-                return preloadedVideo.videoEl.currentSrc;
-            }
+    return (
+      <div className="opensource__container">
+        <div className="opensource__header">
+          <AcademiaHeader
+            name={name}
+            positions={positions}
+            tabs={tabs.map((tab) => tab.name)}
+            onCompassClick={this.handleCompassClick}
+            onTabClick={(tabName) => {
+              const matchedTab = tabs.find((tab) => tab.name === tabName);
+              if (matchedTab?.path) {
+                navigate(matchedTab.path);
+              } else {
+                navigate(`/${tabName.toLowerCase()}`);
+              }
+            }}
+            positionIndex={0}
+            snakeEffectProps={{
+              duration: 0.3,
+              delayIncrement: 0.08,
+              initialDelayRatio: 1,
+            }}
+          />
+        </div>
 
-            return mediaToRender.src;
-        };
+        <div className="opensource__content">
+          <div className="opensource__list-column">
+            <PostList
+              posts={posts}
+              onPostHover={this.updateMedia}
+              positionIndex={1}
+              snakeEffectProps={{
+                duration: 0.5,
+                delayIncrement: 0.1,
+                initialDelayRatio: 0.2,
+              }}
+            />
+          </div>
+          <div className="opensource__media-preview-column">
+            {media && (
+              <div
+                className={`opensource__media-preview ${
+                  media.aspect === "portrait" ? "portrait" : "landscape"
+                }`}
+              >
+                {media.type === "image" ? (
+                  <img
+                    src={media.src}
+                    alt="Preview"
+                    className="opensource__media-content"
+                  />
+                ) : (
+                  <video
+                    src={getPlaybackSrc(media)}
+                    className="opensource__media-content"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="auto"
+                    controls={false}
+                    disablePictureInPicture
+                    controlsList="nodownload noremoteplayback"
+                  />
+                )}
+              </div>
+            )}
+          </div>
+        </div>
 
-        return (
-            <div className="opensource__container">
-                <div className="opensource__header">
-                    <AcademiaHeader
-                        name={name}
-                        positions={positions}
-                        tabs={tabs.map((tab) => tab.name)}
-                        onCompassClick={this.handleCompassClick}
-                        onTabClick={(tabName) => {
-                            const matchedTab = tabs.find((tab) => tab.name === tabName);
-
-                            if (matchedTab?.path) {
-                                navigate(matchedTab.path);
-                            } else {
-                                navigate(`/${tabName.toLowerCase()}`);
-                            }
-                        }}
-                        positionIndex={0}
-                        snakeEffectProps={{
-                            duration: 0.3,
-                            delayIncrement: 0.08,
-                            initialDelayRatio: 1,
-                        }}
-                    />
-                </div>
-                <div className="opensource__content">
-                    <div className="opensource__list-column">
-                        <PostList
-                            posts={posts}
-                            onPostHover={this.updateMedia}
-                            positionIndex={1}
-                            snakeEffectProps={{
-                                duration: 0.5,
-                                delayIncrement: 0.1,
-                                initialDelayRatio: 0.2,
-                            }}
-                        />
-                    </div>
-                    <div className="opensource__media-preview-column">
-                        {media && (
-                            <div
-                                className={`opensource__media-preview ${
-                                    media.aspect === "portrait" ? "portrait" : "landscape"
-                                }`}
-                            >
-                                {media.type === "image" ? (
-                                    <img
-                                        src={media.src}
-                                        alt="Preview"
-                                        className="opensource__media-content"
-                                    />
-                                ) : (
-                                    <video
-                                        src={getPlaybackSrc(media)}
-                                        className="opensource__media-content"
-                                        autoPlay
-                                        muted
-                                        loop
-                                        playsInline
-                                        preload="auto"
-                                        controls={false}
-                                        disablePictureInPicture
-                                        controlsList="nodownload noremoteplayback"
-                                    />
-                                )}
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
-        );
-    }
+        <section className="opensource__shiny-banner">
+          <ScrollVelocity
+            texts={[
+              <span className="opensource__shiny-banner-text" key="opensource-banner-text">
+                <span className="opensource__shiny-banner-text-prefix">Seeking a </span>
+                <span className="opensource__shiny-banner-text-highlight">
+                  Post-Doc
+                </span>
+                <span className="opensource__shiny-banner-text-prefix"> in </span>
+                <span className="opensource__shiny-banner-text-highlight">
+                  ML4Health
+                </span>
+              </span>,
+            ]}
+            velocity={95}
+            className="opensource__shiny-banner-text"
+          />
+        </section>
+      </div>
+    );
+  }
 }
 
 OpenSource.propTypes = {
