@@ -3,7 +3,7 @@ const publicationsConfig = {
     posts: [
         {
             titles: [
-                "A New Longitudinal Classification Method Based on Stacking Predictions",
+                "A New Longitudinal ML Method based on Stacking Predictions",
                 "for Separate Time Points",
             ],
             details: [
