@@ -10,7 +10,7 @@ const publicationsConfig = {
                 "**Simon Provost**, Alex Freitas",
                 "2025 · Main Author · AI-2025 Conference",
             ],
-            url: "https://www.conferenceexpert.org.uk/admin/papers2.php?conf=ai2025&f=f1",
+            url: "https://doi.org/10.1007/978-3-032-11402-0_12",
         },
         {
             titles: [
