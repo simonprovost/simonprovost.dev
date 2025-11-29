@@ -374,6 +374,7 @@ class PostList extends Component {
             getPostClassName,
             lockedPostId,
             forceMultiline = false,
+            footerLink,
         } = this.props;
         const {isMobile} = this.state;
 
@@ -502,6 +503,17 @@ class PostList extends Component {
                         );
                     })}
                 </SnakeEffectContainer>
+                {footerLink?.url && footerLink?.label && (
+                    <div className="post__external-link">
+                        <a
+                            href={footerLink.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            {footerLink.label}
+                        </a>
+                    </div>
+                )}
             </div>
         );
     }
@@ -522,6 +534,10 @@ PostList.propTypes = {
             url: PropTypes.string,
         })
     ).isRequired,
+    footerLink: PropTypes.shape({
+        label: PropTypes.string,
+        url: PropTypes.string,
+    }),
     onPostHover: PropTypes.func,
     customOnPostHover: PropTypes.func,
     positionIndex: PropTypes.number,
