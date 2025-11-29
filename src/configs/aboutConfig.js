@@ -1,6 +1,9 @@
+import externalContributionsLink from "./externalContributionsLink";
+
 const aboutConfig = {
     showTitle: "About",
     cv_link: "https://drive.google.com/file/d/109UYJLIJ0qp2km9WtfPm5HEbb4O5voiD/view?usp=sharing",
+    externalContributionsLink,
     professional_positions: [
         {
             role: "PhD student",

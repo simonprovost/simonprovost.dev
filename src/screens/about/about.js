@@ -10,6 +10,7 @@ import withNavigation from "../../utils/withNavigation";
 class About extends Component {
     static defaultProps = {
         professional_positions: aboutConfig.professional_positions,
+        externalContributionsLink: aboutConfig.externalContributionsLink,
     };
 
     state = {
@@ -51,6 +52,7 @@ class About extends Component {
 
     personalisedAbout = () => {
         const {isMobile} = this.state;
+        const {externalContributionsLink} = this.props;
 
         return (
             <div className="about__container">
@@ -115,7 +117,7 @@ class About extends Component {
                 {!isMobile && (
                     <section className="about__gradient-card-container">
                         <SnakeEffectContainer
-                            duration={0.5}
+                            duration={0.1}
                             delayIncrement={0.05}
                             initialDelay={0.1}
                             applyToSubchildren={false}
@@ -129,7 +131,7 @@ class About extends Component {
 
                 <div className="about__download-cv-container">
                     <SnakeEffectContainer
-                        duration={0.5}
+                        duration={0.1}
                         delayIncrement={0.05}
                         initialDelay={0.1}
                         applyToSubchildren={false}
@@ -142,6 +144,17 @@ class About extends Component {
                     </SnakeEffectContainer>
                 </div>
 
+                <div className="about__external-contrib">
+                    <a
+                        href={externalContributionsLink?.url}
+                        className="about__external-contrib-link"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        {externalContributionsLink?.label}
+                    </a>
+                </div>
+
                 {!isMobile && (
                     <footer className="about__closing-thoughts">
                         <p>
@@ -152,6 +165,7 @@ class About extends Component {
                         </p>
                     </footer>
                 )}
+
             </div>
         );
     };
@@ -180,14 +194,14 @@ class About extends Component {
                             }}
                             positionIndex={0}
                             snakeEffectProps={{
-                                duration: 0.3,
+                                duration: 0.1,
                                 delayIncrement: 0.08,
                                 initialDelayRatio: 1,
                             }}
                         />
                         <div className="about__content-container">
                             <SnakeEffectContainer
-                                duration={0.5}
+                                duration={0.1}
                                 delayIncrement={0.05}
                                 initialDelay={0.1}
                                 applyToSubchildren={true}
@@ -221,6 +235,10 @@ About.propTypes = {
             ).isRequired,
         })
     ),
+    externalContributionsLink: PropTypes.shape({
+        label: PropTypes.string.isRequired,
+        url: PropTypes.string.isRequired,
+    }).isRequired,
 };
 
 export default withNavigation(About);
