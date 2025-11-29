@@ -49,6 +49,8 @@ class OpenSource extends React.Component {
         this.initialHoverTimerId = null;
         this.isAvatarHovered = false;
 
+        this.preloadedVideos = new Map();
+
         hasMountedOpenSourcePreviously = true;
     }
 
@@ -76,12 +78,18 @@ class OpenSource extends React.Component {
             }
         }
 
+        this.preloadVideoSources(this.props.posts);
+
         if (!this.prefersReducedMotion) {
             this.attachAvatarAnimation();
         }
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
+        if (prevProps.posts !== this.props.posts) {
+            this.preloadVideoSources(this.props.posts);
+        }
+
         if (!this.prefersReducedMotion) {
             this.attachAvatarAnimation();
         } else {
@@ -102,7 +110,56 @@ class OpenSource extends React.Component {
                 this.reduceMotionMedia.removeListener(this.handleMotionPreferenceChange);
             }
         }
+
+        this.teardownPreloadedVideos();
     }
+
+    preloadVideoSources = (posts) => {
+        if (!Array.isArray(posts) || typeof document === "undefined") {
+            return;
+        }
+
+        posts.forEach(({media}) => {
+            if (!media || media.type !== "video" || !media.src) {
+                return;
+            }
+
+            if (this.preloadedVideos.has(media.src)) {
+                return;
+            }
+
+            const linkEl = document.createElement("link");
+            linkEl.rel = "preload";
+            linkEl.as = "video";
+            linkEl.href = media.src;
+
+            const videoEl = document.createElement("video");
+            videoEl.src = media.src;
+            videoEl.preload = "auto";
+            videoEl.muted = true;
+            videoEl.playsInline = true;
+            videoEl.load();
+
+            document.head.appendChild(linkEl);
+            this.preloadedVideos.set(media.src, {linkEl, videoEl});
+        });
+    };
+
+    teardownPreloadedVideos = () => {
+        this.preloadedVideos.forEach(({linkEl, videoEl}) => {
+            if (linkEl?.parentNode) {
+                linkEl.parentNode.removeChild(linkEl);
+            }
+
+            if (videoEl) {
+                videoEl.pause();
+                videoEl.removeAttribute("src");
+                videoEl.load();
+            }
+        });
+
+        this.preloadedVideos.clear();
+    };
 
     handleMotionPreferenceChange = (event) => {
         this.prefersReducedMotion = event.matches;
@@ -507,6 +564,11 @@ class OpenSource extends React.Component {
                                         autoPlay
                                         muted
                                         loop
+                                        playsInline
+                                        preload="auto"
+                                        controls={false}
+                                        disablePictureInPicture
+                                        controlsList="nodownload noremoteplayback"
                                     />
                                 )}
                             </div>
