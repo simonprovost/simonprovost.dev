@@ -22,28 +22,8 @@ const openSourceConfig = {
     ],
     posts: [
         {
-            titles: ["Urban Mapper"],
-            details: ["2025 · Spatio Urban Analysis"],
-            media: {
-                type: "video",
-                src: "videos/urban_mapper.webm",
-                aspect: "landscape",
-            },
-            url: "https://github.com/VIDA-NYU/UrbanMapper",
-        },
-        {
-            titles: ["Auto-Sklong"],
-            details: ["2024 · AutoML for Longitudinal Data"],
-            media: {
-                type: "video",
-                src: "videos/auto_sklong.webm",
-                aspect: "landscape",
-            },
-            url: "https://github.com/simonprovost/auto-sklong",
-        },
-        {
             titles: ["Scikit-Longitudinal"],
-            details: ["2023 · ML for Longitudinal Data"],
+            details: ["70+ stars | Sklearn-like Longitudinal ML Library"],
             media: {
                 type: "video",
                 src: "videos/sklong.webm",
@@ -52,8 +32,58 @@ const openSourceConfig = {
             url: "https://github.com/simonprovost/scikit-longitudinal",
         },
         {
+            titles: ["Auto-Sklong"],
+            details: ["40+ stars | AutoML system for Longitudinal ML"],
+            media: {
+                type: "video",
+                src: "videos/auto_sklong.webm",
+                aspect: "landscape",
+            },
+            url: "https://github.com/simonprovost/auto-sklong",
+        },
+        {
+            titles: ["Urban Mapper"],
+            details: ["60+ stars | Sklearn-like Spatio-Urban Analysis"],
+            media: {
+                type: "video",
+                src: "videos/urban_mapper.webm",
+                aspect: "landscape",
+            },
+            url: "https://github.com/VIDA-NYU/UrbanMapper",
+        },
+        {
+            titles: ["(M)odel-(C)ontext-(P)rotocols Orchestrator"],
+            details: ["10+ stars | Stack your fav. MCPs"],
+            media: {
+                type: "video",
+                src: "videos/mcpstack.webm",
+                aspect: "landscape",
+            },
+            url: "https://github.com/MCP-Pipeline/MCPStack",
+        },
+        {
+            titles: ["AutoDDG: From POC to Modern Python Library"],
+            details: ["Accepted | Open-Source @ NYU (VIDA)"],
+            media: {
+                type: "video",
+                src: "videos/github_3.webm",
+                aspect: "landscape",
+            },
+            url: "https://github.com/VIDA-NYU/AutoDDG/pull/4",
+        },
+        {
+            titles: ["AutoDDG: Multi-LLM Providers & Generators"],
+            details: ["In-Review | Open-Source @ NYU (VIDA)"],
+            media: {
+                type: "video",
+                src: "videos/github_4.webm",
+                aspect: "landscape",
+            },
+            url: "https://github.com/VIDA-NYU/AutoDDG/pull/6",
+        },
+        {
             titles: ["GAMA x SMAC3"],
-            details: ["2023 · Open-Source Contributions"],
+            details: ["In-Review | Open-Source @ TU/e (AMORE)"],
             media: {
                 type: "video",
                 src: "videos/github_1.webm",
@@ -63,7 +93,7 @@ const openSourceConfig = {
         },
         {
             titles: ["GAMA x ConfigSpace"],
-            details: ["2022 · Open-Source Contributions"],
+            details: ["In-Review | Open-Source @ TU/e (AMORE)"],
             media: {
                 type: "video",
                 src: "videos/github_2.webm",

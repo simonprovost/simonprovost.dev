@@ -540,12 +540,15 @@ OpenSource.propTypes = {
     ).isRequired,
     posts: PropTypes.arrayOf(
         PropTypes.shape({
-            title: PropTypes.string.isRequired,
-            details: PropTypes.string.isRequired,
-            media: PropTypes.shape({
-                type: PropTypes.oneOf(["image", "video"]).isRequired,
-                src: PropTypes.string.isRequired,
-            }),
+            titles: PropTypes.arrayOf(PropTypes.string).isRequired,
+            details: PropTypes.arrayOf(PropTypes.string).isRequired,
+            media: PropTypes.oneOfType([
+                PropTypes.shape({
+                    type: PropTypes.oneOf(["image", "video", "iframe"]).isRequired,
+                    src: PropTypes.string.isRequired,
+                }),
+                PropTypes.oneOf([null]),
+            ]),
             url: PropTypes.string,
         })
     ).isRequired,
