@@ -131,6 +131,7 @@ class OpenSource extends React.Component {
             const linkEl = document.createElement("link");
             linkEl.rel = "preload";
             linkEl.as = "video";
+            linkEl.fetchPriority = "high";
             linkEl.href = media.src;
 
             const videoEl = document.createElement("video");
@@ -139,6 +140,30 @@ class OpenSource extends React.Component {
             videoEl.muted = true;
             videoEl.playsInline = true;
             videoEl.load();
+
+            const warmBuffer = () => {
+                const playPromise = videoEl.play();
+
+                if (playPromise?.then) {
+                    playPromise
+                        .then(() => {
+                            videoEl.pause();
+                            videoEl.currentTime = 0;
+                        })
+                        .catch(() => {
+                            // Ignore autoplay rejections caused by browser policies.
+                        });
+                }
+            };
+
+            videoEl.addEventListener("canplaythrough", warmBuffer, {once: true});
+            if (window.requestIdleCallback) {
+                window.requestIdleCallback(() => {
+                    if (videoEl.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA) {
+                        warmBuffer();
+                    }
+                });
+            }
 
             document.head.appendChild(linkEl);
             this.preloadedVideos.set(media.src, {linkEl, videoEl});
@@ -506,6 +531,19 @@ class OpenSource extends React.Component {
         const {name, positions, tabs, posts, navigate} = this.props;
         const {media} = this.state;
 
+        const getPlaybackSrc = (mediaToRender) => {
+            if (!mediaToRender) {
+                return null;
+            }
+
+            const preloadedVideo = this.preloadedVideos.get(mediaToRender.src);
+            if (preloadedVideo?.videoEl?.currentSrc) {
+                return preloadedVideo.videoEl.currentSrc;
+            }
+
+            return mediaToRender.src;
+        };
+
         return (
             <div className="opensource__container">
                 <div className="opensource__header">
@@ -559,7 +597,7 @@ class OpenSource extends React.Component {
                                     />
                                 ) : (
                                     <video
-                                        src={media.src}
+                                        src={getPlaybackSrc(media)}
                                         className="opensource__media-content"
                                         autoPlay
                                         muted
