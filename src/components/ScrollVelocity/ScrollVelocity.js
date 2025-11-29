@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useState } from "react";
+import React, { useRef, useLayoutEffect, useState, useEffect } from "react";
 import {
   motion,
   useScroll,
@@ -59,7 +59,14 @@ function VelocityText({
   );
 
   const copyRef = useRef(null);
+  const containerRef = useRef(null);
   const copyWidth = useElementWidth(copyRef);
+  const containerWidth = useElementWidth(containerRef);
+  const copiesNeeded = copyWidth
+    ? Math.ceil(containerWidth / copyWidth) + 400
+    : numCopies ?? 1;
+  const copyCount = Math.max(numCopies ?? 1, copiesNeeded);
+  const totalCopyWidth = copyWidth * copyCount;
 
   function wrap(min, max, v) {
     const range = max - min;
@@ -69,12 +76,22 @@ function VelocityText({
 
   const x = useTransform(baseX, (v) => {
     if (copyWidth === 0) return "0px";
-    return `${wrap(-copyWidth, 0, v)}px`;
+    const loopWidth = totalCopyWidth || copyWidth;
+    return `${wrap(-loopWidth, 0, v)}px`;
   });
+
+  useEffect(() => {
+    if (copyWidth) {
+      const halfTrack = Math.ceil(copyCount / 2) * copyWidth;
+      baseX.set(-halfTrack);
+    }
+  }, [baseX, copyCount, copyWidth]);
 
   const directionFactor = useRef(1);
 
   useAnimationFrame((t, delta) => {
+    if (copyWidth === 0) return;
+
     let moveBy = directionFactor.current * baseVelocity * (delta / 1000);
 
     if (velocityFactor.get() < 0) {
@@ -92,7 +109,7 @@ function VelocityText({
   });
 
   const spans = [];
-  for (let i = 0; i < numCopies; i++) {
+  for (let i = 0; i < copyCount; i++) {
     spans.push(
       <span className={className} key={i} ref={i === 0 ? copyRef : null}>
         {children}
@@ -101,7 +118,7 @@ function VelocityText({
   }
 
   return (
-    <div className={parallaxClassName} style={parallaxStyle}>
+    <div className={parallaxClassName} style={parallaxStyle} ref={containerRef}>
       <motion.div className={scrollerClassName} style={{ x, ...scrollerStyle }}>
         {spans}
       </motion.div>
