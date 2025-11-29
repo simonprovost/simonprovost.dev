@@ -15,6 +15,7 @@ import PeerReviews from "./screens/peerReviews/peerReviews";
 import Connect from "./screens/connect/connect";
 import { injectSpeedInsights } from "@vercel/speed-insights";
 import ThemeToggle from "./components/themeToggle/themeToggle";
+import SmoothScroll from "./components/smoothScroll/SmoothScroll";
 
 const applyBodyClass = (theme) => {
     if (typeof document === "undefined") {
@@ -118,11 +119,13 @@ const App = () => {
     ), [theme]);
 
     return (
-        <Router>
-            <ThemeToggle theme={theme} onToggle={toggleTheme} />
-            {routerRoutes}
-            <Analytics />
-        </Router>
+        <SmoothScroll>
+            <Router>
+                <ThemeToggle theme={theme} onToggle={toggleTheme} />
+                {routerRoutes}
+                <Analytics />
+            </Router>
+        </SmoothScroll>
     );
 };
 
