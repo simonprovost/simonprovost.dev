@@ -228,7 +228,7 @@ body.theme-dark .talks__media-toolbar-button--disabled {
     .post__container:focus-within
     .post__hint-icon {
     opacity: 1;
-    transform: translate(100%, -50%) scale(1);
+    transform: translate(-100%, -50%) scale(1);
     animation: talks__hint-pointer 1.5s ease-in-out infinite;
 }
 
@@ -281,15 +281,15 @@ body.theme-dark .talks__media-toolbar-button--disabled {
 @keyframes talks__hint-pointer {
     0%,
     100% {
-        transform: translate(100%, -50%) scale(1);
+        transform: translate(-100%, -50%) scale(1);
         box-shadow: 0 12px 26px rgba(15, 23, 42, 0.18);
     }
     45% {
-        transform: translate(calc(100% + 6px), -48%) scale(0.88);
+        transform: translate(calc(-100% - 6px), -48%) scale(0.88);
         box-shadow: 0 10px 22px rgba(15, 23, 42, 0.14);
     }
     65% {
-        transform: translate(100%, -50%) scale(1.08);
+        transform: translate(-100%, -50%) scale(1.08);
         box-shadow: 0 14px 30px rgba(15, 23, 42, 0.22);
     }
 }
