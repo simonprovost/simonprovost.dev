@@ -27,6 +27,8 @@ class Talks extends React.Component {
             this.updateViewportMode();
             window.addEventListener("resize", this.handleResize);
         }
+
+        this.preloadAllMedia();
     }
 
     componentWillUnmount() {
@@ -209,6 +211,26 @@ class Talks extends React.Component {
             const separator = media.src.includes("?") ? "&" : "?";
             return `${media.src}${separator}theme=${theme}`;
         }
+    };
+
+    preloadAllMedia = () => {
+        const {posts} = this.props;
+
+        this.setState((prevState) => {
+            const updatedCache = new Set(prevState.cachedMediaIds);
+
+            posts.forEach((post) => {
+                if (post.media) {
+                    updatedCache.add(post.id);
+                }
+            });
+
+            if (updatedCache.size === prevState.cachedMediaIds.size) {
+                return null;
+            }
+
+            return {cachedMediaIds: updatedCache};
+        });
     };
 
     renderMediaPreview = () => {
