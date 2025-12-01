@@ -6,12 +6,15 @@ import AcademiaHeader from "../../components/academiaHeader/academiaHeader";
 import SnakeEffectContainer from "../../components/snakeEffect/snakeEffect";
 import GradientCard from "../../components/GradientCard/GradientCard";
 import withNavigation from "../../utils/withNavigation";
+import VariableProximity from "../../components/VariableProximity/VariableProximity";
 
 class About extends Component {
     static defaultProps = {
         professional_positions: aboutConfig.professional_positions,
         externalContributionsLink: aboutConfig.externalContributionsLink,
     };
+
+    downloadContainerRef = React.createRef();
 
     state = {
         isMobile: false,
@@ -138,9 +141,23 @@ class About extends Component {
                         parentStyle="about__download-cv-wrapper"
                         childStyle="about__download-cv-link"
                     >
-                        <a href={this.props.cv_link} onClick={this.handleDownload}>
-                            Download CV
-                        </a>
+                        <div className="about__download-cv-proximity" ref={this.downloadContainerRef}>
+                            <button
+                                type="button"
+                                className="about__download-cv-button about__download-cv-link"
+                                onClick={this.handleDownload}
+                            >
+                                <VariableProximity
+                                    label="Download CV"
+                                    className="about__download-cv-variable"
+                                    fromFontVariationSettings="'wght' 400, 'opsz' 9"
+                                    toFontVariationSettings="'wght' 900, 'opsz' 36"
+                                    containerRef={this.downloadContainerRef}
+                                    radius={120}
+                                    falloff="linear"
+                                />
+                            </button>
+                        </div>
                     </SnakeEffectContainer>
                 </div>
 
@@ -148,23 +165,12 @@ class About extends Component {
                     <a
                         href={externalContributionsLink?.url}
                         className="about__external-contrib-link"
-                        target="_blank"
+                        target="_self"
                         rel="noreferrer"
                     >
                         {externalContributionsLink?.label}
                     </a>
                 </div>
-
-                {!isMobile && (
-                    <footer className="about__closing-thoughts">
-                        <p>
-                            ``My work resides at the convergence of inquiry and creativity,
-                            perpetually probing the boundaries of possibility and rethinking the
-                            function of machine learning in helping Fellow beings.`` <br/> - Simon
-                            Provost, 2024
-                        </p>
-                    </footer>
-                )}
 
             </div>
         );

@@ -61,12 +61,29 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+    margin-top: 24px;
 }
 
 .about__download-cv-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: 12px;
+}
+
+.about__download-cv-proximity {
+    position: relative;
+    display: inline-flex;
+}
+
+.about__download-cv-button {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .about__download-cv-link {
@@ -120,18 +137,10 @@
     flex: 1 1 50%;
 }
 
-.about__closing-thoughts {
-    font-style: italic;
-    font-size: 1.1rem;
-    text-align: center;
-    width: 100%;
-}
-
 .about__external-contrib {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 0.5rem;
 }
 
 .about__external-contrib-link {
@@ -150,16 +159,15 @@
 }
 
 .about__container p,
-.about__download-cv-link,
-.about__closing-thoughts p {
+.about__download-cv-link {
     word-break: break-word;
     overflow-wrap: anywhere;
     hyphens: auto;
 }
 
-.about__closing-thoughts p {
-    margin: 0 auto;
-    max-width: 58ch;
+.about__download-cv-variable {
+    font-size: 41px;
+    letter-spacing: 0.4rem;
 }
 
 @media (max-width: 1024px) {
@@ -189,10 +197,6 @@
         font-size: 0.95rem;
     }
 
-    .about__closing-thoughts {
-        font-size: 1rem;
-    }
-
     .about__external-contrib {
         justify-content: flex-start;
     }
@@ -215,21 +219,15 @@
     }
 
     .about__download-cv-wrapper {
+        margin-left: 0;
+    }
+
+    .about__download-cv-wrapper {
         align-items: flex-start;
     }
 
     .about__download-cv-link {
         text-align: left;
-    }
-
-    .about__closing-thoughts {
-        text-align: left;
-        padding: 0 1rem;
-    }
-
-    .about__closing-thoughts p {
-        margin: 0;
-        max-width: 100%;
     }
 
     .about__personal-section {
@@ -250,9 +248,6 @@
         font-size: 0.95rem;
     }
 
-    .about__closing-thoughts {
-        font-size: 0.85rem;
-    }
 }
 
 @media (max-width: 600px) {
@@ -281,9 +276,10 @@
         font-size: 0.88rem;
     }
 
-    .about__closing-thoughts {
-        font-size: 0.82rem;
+    .about__download-cv-variable {
+        font-size: 21px;
     }
+
 }
 
 @media (max-width: 480px) {
@@ -302,15 +298,8 @@
     }
 
     .about__gradient-card-container,
-    .about__closing-thoughts {
-        display: none;
-    }
-
     .about__gradient-card-container {
         padding: 0;
     }
-
-    .about__closing-thoughts {
-        font-size: 0.76rem;
-    }
 }
+
