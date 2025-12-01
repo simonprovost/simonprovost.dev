@@ -198,6 +198,11 @@
 
     .academiaHeader__tabs-container {
         font-size: 14px;
+        font-size: 12px;
+        column-gap: 12px;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .academiaHeader__static-title {
