@@ -58,6 +58,15 @@
     will-change: transform, width, height;
 }
 
+.talks__media-preview-wrapper--hidden {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    height: 0;
+    width: 0;
+    overflow: hidden;
+}
+
 .talks__media-preview-wrapper--expanded {
     position: fixed;
     top: 50%;

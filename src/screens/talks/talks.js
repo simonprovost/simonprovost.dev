@@ -16,6 +16,7 @@ class Talks extends React.Component {
             showLockHint: true,
             isMediaExpanded: false,
             isMobileView: false,
+            cachedMediaIds: new Set(),
         };
         this.hoverUnlockTimeout = null;
         this.originalBodyOverflow = null;
@@ -53,6 +54,26 @@ class Talks extends React.Component {
                 document.body.style.overflow = this.originalBodyOverflow || "";
                 document.removeEventListener("keydown", this.handleKeyDown);
             }
+        }
+
+        const prevActivePostId = prevState.activePost?.id;
+        const currentActivePostId = this.state.activePost?.id;
+
+        if (
+            currentActivePostId &&
+            currentActivePostId !== prevActivePostId &&
+            !this.state.cachedMediaIds.has(currentActivePostId)
+        ) {
+            this.setState((prevState) => {
+                if (prevState.cachedMediaIds.has(currentActivePostId)) {
+                    return null;
+                }
+
+                const updatedCache = new Set(prevState.cachedMediaIds);
+                updatedCache.add(currentActivePostId);
+
+                return {cachedMediaIds: updatedCache};
+            });
         }
     }
 
@@ -191,157 +212,172 @@ class Talks extends React.Component {
     };
 
     renderMediaPreview = () => {
-        const {activePost, isMediaExpanded, isMobileView} = this.state;
+        const {activePost, isMediaExpanded, isMobileView, cachedMediaIds} = this.state;
+        const {posts} = this.props;
 
-        if (!activePost) {
-            return null;
+        const cachedIds = new Set(cachedMediaIds);
+
+        if (activePost?.id) {
+            cachedIds.add(activePost.id);
         }
 
-        const {media} = activePost;
-        if (!media) {
-            return null;
-        }
+        const cachedPosts = posts.filter((post) => cachedIds.has(post.id) && post.media);
 
-        if (isMobileView && !isMediaExpanded) {
-            return null;
-        }
-
-        const previewClass = `talks__media-preview ${media.aspect === "portrait" ? "portrait" : "landscape"}`;
-        const wrapperClass = `talks__media-preview-wrapper${
-            isMediaExpanded ? " talks__media-preview-wrapper--expanded" : ""
-        }`;
-        const figmaLink = media.figmaLink || media.src;
-        const pdfLink = media.pdfLink || "";
-        const hasPdfLink = Boolean(pdfLink);
-        const enlargeLabel = isMediaExpanded ? "Exit full-screen preview" : "Enlarge preview";
-
-        const renderMediaContent = () => {
-            if (media.type === "image") {
-                return (
-                    <div className={previewClass}>
-                        <img
-                            src={media.src}
-                            alt={media.title || activePost.titles.join(" ")}
-                            className="talks__media-content"
-                        />
-                    </div>
-                );
-            }
-
-            if (media.type === "video") {
-                return (
-                    <div className={previewClass}>
-                        <video
-                            src={media.src}
-                            className="talks__media-content"
-                            autoPlay
-                            muted
-                            loop
-                        />
-                    </div>
-                );
-            }
-
-            if (media.type === "iframe") {
-                const iframeSrc = this.getIframeSrc(media);
-                return (
-                    <div className={previewClass}>
-                        <iframe
-                            src={iframeSrc}
-                            title={media.title || activePost.titles.join(" ")}
-                            className="talks__media-content"
-                            allow="fullscreen"
-                            allowFullScreen
-                            loading="lazy"
-                            style={{border: "1px solid rgba(0, 0, 0, 0.1)"}}
-                        ></iframe>
-                    </div>
-                );
-            }
-
-            return null;
-        };
-
-        const mediaContent = renderMediaContent();
-
-        if (!mediaContent) {
+        if (cachedPosts.length === 0) {
             return null;
         }
 
         return (
             <>
-                {isMediaExpanded && <div className="talks__media-overlay" aria-hidden="true" />}
-                <div className={wrapperClass}>
-                    {mediaContent}
-                    <div className="talks__media-toolbar">
-                        <button
-                            type="button"
-                            className="talks__media-toolbar-button"
-                            onClick={() => this.openExternalLink(figmaLink)}
-                            aria-label="Open slides in Figma"
-                        >
-                            <svg viewBox="0 0 24 24" aria-hidden="true" className="talks__media-toolbar-icon">
-                                <path d="M7.5 2.5h4a3.5 3.5 0 0 1 0 7h-4z" fill="currentColor" />
-                                <path d="M11.5 9.5a3.5 3.5 0 1 1 0 7h-4v-3.5a3.5 3.5 0 0 1 3.5-3.5z" fill="currentColor" />
-                                <path d="M7.5 2.5a3.5 3.5 0 1 0 0 7z" fill="currentColor" />
-                                <circle cx="7.5" cy="16" r="3.5" fill="currentColor" />
-                                <path d="M11.5 2.5H15A3.5 3.5 0 1 1 15 9h-3.5z" fill="currentColor" />
-                            </svg>
-                            <span className="talks__sr-only">Open in Figma</span>
-                        </button>
-                        <button
-                            type="button"
-                            className={`talks__media-toolbar-button${
-                                isMediaExpanded ? " talks__media-toolbar-button--active" : ""
-                            }`}
-                            onClick={this.handleExpandToggle}
-                            aria-label={enlargeLabel}
-                            aria-pressed={isMediaExpanded}
-                        >
-                            <svg viewBox="0 0 24 24" aria-hidden="true" className="talks__media-toolbar-icon">
-                                <path
-                                    d="M5 5h6v2H7v4H5zm14 0v6h-2V7h-4V5zm-6 14h6v-6h-2v4h-4zm-2-6H5v6h6v-2H7v-4z"
-                                    fill="currentColor"
-                                />
-                            </svg>
-                            <span className="talks__sr-only">{enlargeLabel}</span>
-                        </button>
-                        <button
-                            type="button"
-                            className={`talks__media-toolbar-button${
-                                hasPdfLink ? "" : " talks__media-toolbar-button--disabled"
-                            }`}
-                            onClick={() => this.openExternalLink(pdfLink)}
-                            aria-label={hasPdfLink ? "Download PDF" : "PDF unavailable"}
-                            disabled={!hasPdfLink}
-                        >
-                            <svg viewBox="0 0 24 24" aria-hidden="true" className="talks__media-toolbar-icon">
-                                <path
-                                    d="M6 3h9l4 4v14H6z"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="1.5"
-                                    strokeLinejoin="round"
-                                />
-                                <path
-                                    d="M15 3v4h4"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="1.5"
-                                    strokeLinejoin="round"
-                                />
-                                <path
-                                    d="M9 11.5h1.25a1.75 1.75 0 0 1 0 3.5H9zm3.5 0h1a1.5 1.5 0 0 1 0 3h-1zM9 13.25h1"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="1.4"
-                                    strokeLinecap="round"
-                                />
-                            </svg>
-                            <span className="talks__sr-only">Download PDF</span>
-                        </button>
-                    </div>
-                </div>
+                {isMediaExpanded && activePost && <div className="talks__media-overlay" aria-hidden="true" />}
+                {cachedPosts.map((post) => {
+                    if (isMobileView && !isMediaExpanded && (!activePost || post.id !== activePost.id)) {
+                        return null;
+                    }
+
+                    const {media} = post;
+                    const isActive = activePost && post.id === activePost.id;
+                    const shouldHideForMobile = isMobileView && !isMediaExpanded;
+                    const previewClass = `talks__media-preview ${
+                        media.aspect === "portrait" ? "portrait" : "landscape"
+                    }`;
+                    const wrapperClass = `talks__media-preview-wrapper${
+                        isActive && isMediaExpanded ? " talks__media-preview-wrapper--expanded" : ""
+                    }${isActive && !shouldHideForMobile ? "" : " talks__media-preview-wrapper--hidden"}`;
+                    const figmaLink = media.figmaLink || media.src;
+                    const pdfLink = media.pdfLink || "";
+                    const hasPdfLink = Boolean(pdfLink);
+                    const enlargeLabel = isMediaExpanded ? "Exit full-screen preview" : "Enlarge preview";
+
+                    const renderMediaContent = () => {
+                        if (media.type === "image") {
+                            return (
+                                <div className={previewClass}>
+                                    <img
+                                        src={media.src}
+                                        alt={media.title || post.titles.join(" ")}
+                                        className="talks__media-content"
+                                    />
+                                </div>
+                            );
+                        }
+
+                        if (media.type === "video") {
+                            return (
+                                <div className={previewClass}>
+                                    <video
+                                        src={media.src}
+                                        className="talks__media-content"
+                                        autoPlay
+                                        muted
+                                        loop
+                                    />
+                                </div>
+                            );
+                        }
+
+                        if (media.type === "iframe") {
+                            const iframeSrc = this.getIframeSrc(media);
+                            return (
+                                <div className={previewClass}>
+                                    <iframe
+                                        src={iframeSrc}
+                                        title={media.title || post.titles.join(" ")}
+                                        className="talks__media-content"
+                                        allow="fullscreen"
+                                        allowFullScreen
+                                        loading="lazy"
+                                        style={{border: "1px solid rgba(0, 0, 0, 0.1)"}}
+                                    ></iframe>
+                                </div>
+                            );
+                        }
+
+                        return null;
+                    };
+
+                    const mediaContent = renderMediaContent();
+
+                    if (!mediaContent) {
+                        return null;
+                    }
+
+                    return (
+                        <div key={post.id} className={wrapperClass} aria-hidden={!isActive}>
+                            {mediaContent}
+                            {isActive && (
+                                <div className="talks__media-toolbar">
+                                    <button
+                                        type="button"
+                                        className="talks__media-toolbar-button"
+                                        onClick={() => this.openExternalLink(figmaLink)}
+                                        aria-label="Open slides in Figma"
+                                    >
+                                        <svg viewBox="0 0 24 24" aria-hidden="true" className="talks__media-toolbar-icon">
+                                            <path d="M7.5 2.5h4a3.5 3.5 0 0 1 0 7h-4z" fill="currentColor" />
+                                            <path d="M11.5 9.5a3.5 3.5 0 1 1 0 7h-4v-3.5a3.5 3.5 0 0 1 3.5-3.5z" fill="currentColor" />
+                                            <path d="M7.5 2.5a3.5 3.5 0 1 0 0 7z" fill="currentColor" />
+                                            <circle cx="7.5" cy="16" r="3.5" fill="currentColor" />
+                                            <path d="M11.5 2.5H15A3.5 3.5 0 1 1 15 9h-3.5z" fill="currentColor" />
+                                        </svg>
+                                        <span className="talks__sr-only">Open in Figma</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className={`talks__media-toolbar-button${
+                                            isMediaExpanded ? " talks__media-toolbar-button--active" : ""
+                                        }`}
+                                        onClick={this.handleExpandToggle}
+                                        aria-label={enlargeLabel}
+                                        aria-pressed={isMediaExpanded}
+                                    >
+                                        <svg viewBox="0 0 24 24" aria-hidden="true" className="talks__media-toolbar-icon">
+                                            <path
+                                                d="M5 5h6v2H7v4H5zm14 0v6h-2V7h-4V5zm-6 14h6v-6h-2v4h-4zm-2-6H5v6h6v-2H7v-4z"
+                                                fill="currentColor"
+                                            />
+                                        </svg>
+                                        <span className="talks__sr-only">{enlargeLabel}</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className={`talks__media-toolbar-button${
+                                            hasPdfLink ? "" : " talks__media-toolbar-button--disabled"
+                                        }`}
+                                        onClick={() => this.openExternalLink(pdfLink)}
+                                        aria-label={hasPdfLink ? "Download PDF" : "PDF unavailable"}
+                                        disabled={!hasPdfLink}
+                                    >
+                                        <svg viewBox="0 0 24 24" aria-hidden="true" className="talks__media-toolbar-icon">
+                                            <path
+                                                d="M6 3h9l4 4v14H6z"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="1.5"
+                                                strokeLinejoin="round"
+                                            />
+                                            <path
+                                                d="M15 3v4h4"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="1.5"
+                                                strokeLinejoin="round"
+                                            />
+                                            <path
+                                                d="M9 11.5h1.25a1.75 1.75 0 0 1 0 3.5H9zm3.5 0h1a1.5 1.5 0 0 1 0 3h-1zM9 13.25h1"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="1.4"
+                                                strokeLinecap="round"
+                                            />
+                                        </svg>
+                                        <span className="talks__sr-only">Download PDF</span>
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    );
+                })}
             </>
         );
     };
